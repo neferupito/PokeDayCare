@@ -1,11 +1,10 @@
 package com.nefee.pokedaycare.data.entity;
 
 import lombok.*;
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,11 +24,31 @@ public class PokemonEntity extends PokeDayCareEntity {
     @Column(name = "pokemon_id", unique = true, nullable = false)
     private Long id;
 
+    @Column(name = "national_id")
+    @NotNull
+    private String nationalId;
+
     @Column(name = "name")
+    @NotNull
     private String name;
 
-    @Column(name = "birth")
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    private DateTime birth;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "type1_id")
+    @NotNull
+    private TypeEntity type1;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "type2_id")
+    private TypeEntity type2;
+
+    @ManyToMany
+    @JoinTable(
+            name = "pokemons_egg_groups",
+            joinColumns = @JoinColumn(name = "pokemon_id", referencedColumnName = "pokemon_id"),
+            inverseJoinColumns = @JoinColumn(name = "egg_group_id", referencedColumnName = "egg_group_id"))
+    private List<EggGroupEntity> eggGroups;
+
+    @Column(name = "eggcycles")
+    private Integer eggCycles;
 
 }

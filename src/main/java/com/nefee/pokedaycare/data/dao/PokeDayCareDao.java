@@ -24,6 +24,7 @@ public abstract class PokeDayCareDao<T extends PokeDayCareEntity> {
 
     public void create(T entity) {
         sessionFactory.getCurrentSession().persist(entity);
+        System.out.println("== entity "+entityClass.getSimpleName()+" well created");
     }
 
     public void update(T entity) {

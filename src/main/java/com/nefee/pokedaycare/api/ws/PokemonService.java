@@ -32,6 +32,15 @@ public class PokemonService {
 
     }
 
+    @GET
+    @Path("/createDB")
+    @Produces((MediaType.TEXT_PLAIN))
+    public String createDatabase() {
+        load();
+        return pokemonManager.createDB();
+
+    }
+
     private void load() {
         pokemonManager = (PokemonManager) SpringApplicationContext.getBean("pokemonManager");
         gson = new Gson();

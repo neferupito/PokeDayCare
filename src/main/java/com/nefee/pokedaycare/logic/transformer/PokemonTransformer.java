@@ -8,7 +8,6 @@ public class PokemonTransformer {
     public static Pokemon entityToPokemon(PokemonEntity entity) {
         return Pokemon.builder()
                 .name(entity.getName())
-                .birth(entity.getBirth())
                 .build();
     }
 

@@ -7,4 +7,6 @@ public interface PokemonManager {
 
     Pokemon findByName(String name) throws PokeDayCareException;
 
+    String createDB();
+
 }
