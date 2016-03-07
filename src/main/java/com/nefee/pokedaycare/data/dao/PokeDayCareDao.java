@@ -3,14 +3,16 @@ package com.nefee.pokedaycare.data.dao;
 import com.nefee.pokedaycare.data.entity.PokeDayCareEntity;
 import com.nefee.pokedaycare.logic.exception.PokeDayCareException;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class PokeDayCareDao<T extends PokeDayCareEntity> {
+public abstract class PokeDayCareDao<T extends PokeDayCareEntity> {
 
     @Autowired
     @Getter
+    @Setter
     private SessionFactory sessionFactory;
 
     @Getter

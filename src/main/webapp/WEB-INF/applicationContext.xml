@@ -9,7 +9,7 @@
 
     <!--Will detect annotated beans automatically-->
     <context:annotation-config/>
-    <!--<context:spring-configured/>-->
+    <context:spring-configured/>
 
     <context:component-scan base-package="com.nefee.pokedaycare"/>
 
@@ -18,7 +18,7 @@
           destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url"
-                  value="jdbc:mysql://localhost:3306/myawesometeam?characterEncoding=UTF-8&amp;useUnicode=true&amp;createDatabaseIfNotExist=true"/>
+                  value="jdbc:mysql://164.132.102.5:3306/pokedaycaredb?characterEncoding=UTF-8&amp;useUnicode=true&amp;createDatabaseIfNotExist=true"/>
         <property name="username" value="root"/>
         <property name="password" value="rootroot"/>
     </bean>

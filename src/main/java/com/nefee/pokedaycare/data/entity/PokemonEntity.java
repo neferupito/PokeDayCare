@@ -1,8 +1,6 @@
 package com.nefee.pokedaycare.data.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
@@ -12,6 +10,8 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "pokemons")
 @NamedQueries({
@@ -26,11 +26,9 @@ public class PokemonEntity extends PokeDayCareEntity {
     private Long id;
 
     @Column(name = "name")
-    @NotNull
     private String name;
 
     @Column(name = "birth")
-    @NotNull
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime birth;
 

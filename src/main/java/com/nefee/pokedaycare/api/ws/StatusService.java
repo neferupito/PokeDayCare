@@ -8,7 +8,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/status")
 public class StatusService {
 
-    private final String IS_ALIVE = "Pallet Town is alive :)";
+    private final String IS_ALIVE = "Poke Day Care is alive :)";
 
     @GET
     @Path("/isAlive")
