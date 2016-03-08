@@ -13,6 +13,14 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "egg_groups")
+@NamedQueries({
+        @NamedQuery(name = "EggGroupEntity.findByName", query =
+                "SELECT e FROM EggGroupEntity e " +
+                        "WHERE e.name = :egg_group_name"),
+        @NamedQuery(name = "EggGroupEntity.findAllPokemons", query =
+                "SELECT p FROM PokemonEntity p " +
+                        "WHERE :egg_group in p.eggGroups")
+})
 public class EggGroupEntity extends PokeDayCareEntity {
 
     @Id
@@ -24,7 +32,7 @@ public class EggGroupEntity extends PokeDayCareEntity {
     @NotNull
     private String name;
 
-    @ManyToMany (mappedBy="eggGroups")
+    @ManyToMany(mappedBy = "eggGroups")
     private List<PokemonEntity> pokemons;
 
 }

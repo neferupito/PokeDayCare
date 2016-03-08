@@ -16,6 +16,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -43,12 +44,14 @@ public class PokemonPageController {
     }
 
     public void loadPokemon() {
-        try {
-            pokemon = pokemonManager.findByName(name);
-        } catch (PokeDayCareException pdce) {
-            pdce.printStackTrace();
-            FacesUtils.addErrorMessage(pdce.getMessage());
+        Optional<Pokemon> optional = pokemonManager.findByName(name);
+
+        if (optional.isPresent()) {
+            pokemon = optional.get();
+        } else {
+            FacesUtils.addErrorMessage("No Pokemon found");
         }
+
     }
 
 }

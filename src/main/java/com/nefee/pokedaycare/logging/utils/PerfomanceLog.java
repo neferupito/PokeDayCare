@@ -7,7 +7,7 @@ public class PerfomanceLog {
     public static void logPerf(Long startMillis, Logger logger, String serviceName) {
         Long endMillis = System.currentTimeMillis();
         Long resultMillis = endMillis - startMillis;
-        logger.info("Took " + resultMillis + " to " + serviceName);
+        logger.info("Took " + resultMillis + "ms to " + serviceName);
     }
 
 }

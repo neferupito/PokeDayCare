@@ -3,8 +3,8 @@ package com.nefee.pokedaycare.api.ws;
 import com.google.gson.Gson;
 import com.nefee.pokedaycare.config.SpringApplicationContext;
 import com.nefee.pokedaycare.logging.utils.PerfomanceLog;
-import com.nefee.pokedaycare.logic.exception.PokeDayCareException;
 import com.nefee.pokedaycare.logic.manager.PokemonManager;
+import com.nefee.pokedaycare.logic.model.Pokemon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +13,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.Optional;
 
 @Path("/pokemon")
 public class PokemonService {
@@ -30,15 +31,15 @@ public class PokemonService {
         Long startMillis = System.currentTimeMillis();
 
         load();
-        try {
 
-            String json = gson.toJson(pokemonManager.findByName(name));
+        Optional<Pokemon> optional = pokemonManager.findByName(name);
+
+        if (optional.isPresent()) {
+            String json = gson.toJson(optional.get());
             PerfomanceLog.logPerf(startMillis, LOGGER, "find Pokemon named " + name);
             return json;
-
-        } catch (PokeDayCareException e) {
-            e.printStackTrace();
-            return "Nothing found";
+        } else {
+            return "No Pokemon found";
         }
 
     }

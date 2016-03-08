@@ -113,11 +113,11 @@
         <appender-ref ref="api-logfile"/>
     </logger>
 
-    <logger name="org.hibernate" level="DEBUG" additivity="false">
+    <logger name="org.hibernate" level="WARN" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 
-    <logger name="org.springframework" level="DEBUG" additivity="false">
+    <logger name="org.springframework" level="WARN" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 

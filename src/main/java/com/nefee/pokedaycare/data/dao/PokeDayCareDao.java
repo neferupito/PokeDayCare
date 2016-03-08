@@ -21,19 +21,21 @@ public abstract class PokeDayCareDao<T extends PokeDayCareEntity> {
 
     @Getter
     private final Class<T> entityClass;
+    private final String entityClassSimpleName;
 
     public PokeDayCareDao(Class<T> entityClass) {
         this.entityClass = entityClass;
+        entityClassSimpleName = entityClass.getSimpleName();
     }
 
     public void create(T entity) {
         sessionFactory.getCurrentSession().persist(entity);
-        LOGGER.info("Entity {} well created", entityClass.getName());
+        LOGGER.debug("Entity {} has been correctly created", entityClassSimpleName);
     }
 
     public void update(T entity) {
         sessionFactory.getCurrentSession().merge(entity);
-        LOGGER.info("Entity {} well updated", entityClass.getName());
+        LOGGER.debug("Entity {} has been correctly updated", entityClassSimpleName);
     }
 
     public void delete(T entity) throws PokeDayCareException {
@@ -41,10 +43,10 @@ public abstract class PokeDayCareDao<T extends PokeDayCareEntity> {
 
             sessionFactory.getCurrentSession().delete(entity);
 
-            LOGGER.debug("Entity {} has been correctly deleted", entityClass.getName());
+            LOGGER.debug("Entity {} has been correctly deleted", entityClassSimpleName);
 
         } catch (HibernateException he) {
-            LOGGER.error("Error while trying to delete {}", entityClass.getName(), he);
+            LOGGER.error("Error while trying to delete {}", entityClassSimpleName, he);
             throw new PokeDayCareException("Could't delete this entity: " + he.getMessage());
         }
     }

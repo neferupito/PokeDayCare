@@ -3,7 +3,6 @@ package com.nefee.pokedaycare.data.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Getter
@@ -14,8 +13,11 @@ import java.util.List;
 @Entity
 @Table(name = "pokemons")
 @NamedQueries({
-        @NamedQuery(name = "PokemonEntity.findByName", query = "SELECT p FROM PokemonEntity p " +
-                "WHERE p.name = :pokemon_name")
+        @NamedQuery(name = "PokemonEntity.findByName", query =
+                "SELECT p FROM PokemonEntity p " +
+                        "WHERE p.name = :pokemon_name"),
+        @NamedQuery(name = "PokemonEntity.findAll", query =
+                "SELECT p FROM PokemonEntity p")
 })
 public class PokemonEntity extends PokeDayCareEntity {
 
@@ -24,22 +26,25 @@ public class PokemonEntity extends PokeDayCareEntity {
     @Column(name = "pokemon_id", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "national_id")
-    @NotNull
+    @Column(name = "national_id", nullable = false)
     private String nationalId;
 
-    @Column(name = "name")
-    @NotNull
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "type1_id")
-    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "type1_id", nullable = false)
     private TypeEntity type1;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "type2_id")
     private TypeEntity type2;
+
+    @Column(name = "percent_male")
+    private Double percentMale;
+
+    @Column(name = "percent_female")
+    private Double percentFemale;
 
     @ManyToMany
     @JoinTable(
@@ -52,6 +57,6 @@ public class PokemonEntity extends PokeDayCareEntity {
     private Integer eggCycles;
 
     @OneToOne(mappedBy = "pokemon")
-    private EvolutionEntity evolutionEntity;
+    private EvolutionEntity evolution;
 
 }

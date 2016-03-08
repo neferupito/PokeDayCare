@@ -19,15 +19,15 @@ public class PokemonManagerImpl implements PokemonManager {
     @Autowired
     private PokemonDao pokemonDao;
 
-    public Pokemon findByName(String name) throws PokeDayCareException {
+    public Optional<Pokemon> findByName(String name) {
 
         Optional<PokemonEntity> entity = pokemonDao.findByName(name);
 
         if (!entity.isPresent()) {
-            throw new PokeDayCareException("Couldn't find the pokemon named " + name);
+            return Optional.empty();
         }
 
-        return PokemonTransformer.entityToPokemon(entity.get());
+        return Optional.of(PokemonTransformer.entityToPokemon(entity.get()));
 
     }
 

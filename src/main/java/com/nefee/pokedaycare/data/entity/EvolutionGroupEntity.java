@@ -12,6 +12,12 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table (name = "evolution_groups")
+@NamedQueries({
+        @NamedQuery(name = "EvolutionGroupEntity.findPokemonByRank", query =
+                "SELECT p FROM PokemonEntity p " +
+                "WHERE p.evolution.evolutionGroup = :evolution_group AND " +
+                "WHERE p.evolution.rank = :rank")
+})
 public class EvolutionGroupEntity extends PokeDayCareEntity {
 
     @Id

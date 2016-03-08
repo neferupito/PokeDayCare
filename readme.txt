@@ -1,0 +1,1 @@
+[ ] Change EggGroup and Type to ENUM
