@@ -41,6 +41,7 @@
         <jsf.version>2.1</jsf.version>
         <primefaces.version>5.3</primefaces.version>
         <prettyfaces.version>3.3.2</prettyfaces.version>
+        <rewrite.version>2.0.12.Final</rewrite.version>
         <lombok.version>1.16.6</lombok.version>
         <joda.version>2.9.2</joda.version>
         <jadira.version>2.0.1</jadira.version>
@@ -179,10 +180,26 @@
         <!-- 			<version>1.0.10</version> -->
         <!-- 		</dependency> -->
 
+        <!--<dependency>-->
+            <!--<groupId>com.ocpsoft</groupId>-->
+            <!--<artifactId>prettyfaces-jsf2</artifactId>-->
+            <!--<version>3.3.0</version>-->
+        <!--</dependency>-->
+
         <dependency>
-            <groupId>com.ocpsoft</groupId>
-            <artifactId>prettyfaces-jsf2</artifactId>
-            <version>3.3.0</version>
+            <groupId>org.ocpsoft.rewrite</groupId>
+            <artifactId>rewrite-servlet</artifactId>
+            <version>${rewrite.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ocpsoft.rewrite</groupId>
+            <artifactId>rewrite-integration-faces</artifactId>
+            <version>${rewrite.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ocpsoft.rewrite</groupId>
+            <artifactId>rewrite-config-prettyfaces</artifactId>
+            <version>${rewrite.version}</version>
         </dependency>
 
         <!--LOGGING-->
