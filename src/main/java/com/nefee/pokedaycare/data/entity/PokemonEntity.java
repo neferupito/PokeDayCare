@@ -51,4 +51,7 @@ public class PokemonEntity extends PokeDayCareEntity {
     @Column(name = "eggcycles")
     private Integer eggCycles;
 
+    @OneToOne(mappedBy = "pokemon")
+    private EvolutionEntity evolutionEntity;
+
 }

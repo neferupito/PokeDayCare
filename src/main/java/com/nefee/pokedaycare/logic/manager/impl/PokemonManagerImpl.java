@@ -1,11 +1,7 @@
 package com.nefee.pokedaycare.logic.manager.impl;
 
-import com.nefee.pokedaycare.data.dao.EggGroupDao;
-import com.nefee.pokedaycare.data.dao.PokemonDao;
-import com.nefee.pokedaycare.data.dao.TypeDao;
-import com.nefee.pokedaycare.data.entity.EggGroupEntity;
-import com.nefee.pokedaycare.data.entity.PokemonEntity;
-import com.nefee.pokedaycare.data.entity.TypeEntity;
+import com.nefee.pokedaycare.data.dao.*;
+import com.nefee.pokedaycare.data.entity.*;
 import com.nefee.pokedaycare.logic.exception.PokeDayCareException;
 import com.nefee.pokedaycare.logic.manager.PokemonManager;
 import com.nefee.pokedaycare.logic.model.Pokemon;
@@ -17,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.Optional;
 
-@Service("pokemonManager")
-@Transactional(readOnly = true)
+@Service ("pokemonManager")
+@Transactional (readOnly = true)
 public class PokemonManagerImpl implements PokemonManager {
 
     @Autowired
@@ -27,6 +23,10 @@ public class PokemonManagerImpl implements PokemonManager {
     private TypeDao typeDao;
     @Autowired
     private EggGroupDao eggGroupDao;
+    @Autowired
+    private EvolutionDao evolutionDao;
+    @Autowired
+    private EvolutionGroupDao evolutionGroupDao;
 
     public Pokemon findByName(String name) throws PokeDayCareException {
 
@@ -43,9 +43,13 @@ public class PokemonManagerImpl implements PokemonManager {
     @Override
     @Transactional
     public String createDB() {
-        typeDao.create(TypeEntity.builder()
+
+        // ========== TYPES ==========
+
+        TypeEntity normal = TypeEntity.builder()
                 .name("Normal")
-                .build());
+                .build();
+        typeDao.create(normal);
         TypeEntity fire = TypeEntity.builder()
                 .name("Fire")
                 .build();
@@ -54,84 +58,105 @@ public class PokemonManagerImpl implements PokemonManager {
                 .name("Water")
                 .build();
         typeDao.create(water);
-        typeDao.create(TypeEntity.builder()
+        TypeEntity electric = TypeEntity.builder()
                 .name("Electric")
-                .build());
+                .build();
+        typeDao.create(electric);
         TypeEntity grass = TypeEntity.builder()
                 .name("Grass")
                 .build();
         typeDao.create(grass);
-        typeDao.create(TypeEntity.builder()
+        TypeEntity ice = TypeEntity.builder()
                 .name("Ice")
-                .build());
-        typeDao.create(TypeEntity.builder()
+                .build();
+        typeDao.create(ice);
+        TypeEntity fighting = TypeEntity.builder()
                 .name("Fighting")
-                .build());
+                .build();
+        typeDao.create(fighting);
         TypeEntity poison = TypeEntity.builder()
                 .name("Poison")
                 .build();
         typeDao.create(poison);
-        typeDao.create(TypeEntity.builder()
+        TypeEntity ground = TypeEntity.builder()
                 .name("Ground")
-                .build());
+                .build();
+        typeDao.create(ground);
         TypeEntity flying = TypeEntity.builder()
                 .name("Flying")
                 .build();
         typeDao.create(flying);
-        typeDao.create(TypeEntity.builder()
+        TypeEntity psychic = TypeEntity.builder()
                 .name("Psychic")
-                .build());
-        typeDao.create(TypeEntity.builder()
+                .build();
+        typeDao.create(psychic);
+        TypeEntity bug = TypeEntity.builder()
                 .name("Bug")
-                .build());
-        typeDao.create(TypeEntity.builder()
+                .build();
+        typeDao.create(bug);
+        TypeEntity rock = TypeEntity.builder()
                 .name("Rock")
-                .build());
-        typeDao.create(TypeEntity.builder()
+                .build();
+        typeDao.create(rock);
+        TypeEntity ghost = TypeEntity.builder()
                 .name("Ghost")
-                .build());
-        typeDao.create(TypeEntity.builder()
+                .build();
+        typeDao.create(ghost);
+        TypeEntity dragon = TypeEntity.builder()
                 .name("Dragon")
-                .build());
-        typeDao.create(TypeEntity.builder()
+                .build();
+        typeDao.create(dragon);
+        TypeEntity dark = TypeEntity.builder()
                 .name("Dark")
-                .build());
-        typeDao.create(TypeEntity.builder()
+                .build();
+        typeDao.create(dark);
+        TypeEntity steel = TypeEntity.builder()
                 .name("Steel")
-                .build());
-        typeDao.create(TypeEntity.builder()
+                .build();
+        typeDao.create(steel);
+        TypeEntity fairy = TypeEntity.builder()
                 .name("Fairy")
-                .build());
+                .build();
+        typeDao.create(fairy);
 
-        eggGroupDao.create(EggGroupEntity.builder()
+        // ========== EGG GROUPS ==========
+
+        EggGroupEntity eggAmorphous = EggGroupEntity.builder()
                 .name("Amorphous")
-                .build());
-        eggGroupDao.create(EggGroupEntity.builder()
+                .build();
+        eggGroupDao.create(eggAmorphous);
+        EggGroupEntity eggBug = EggGroupEntity.builder()
                 .name("Bug")
-                .build());
+                .build();
+        eggGroupDao.create(eggBug);
         EggGroupEntity eggDragon = EggGroupEntity.builder()
                 .name("Dragon")
                 .build();
         eggGroupDao.create(eggDragon);
-        eggGroupDao.create(EggGroupEntity.builder()
+        EggGroupEntity eggFairy = EggGroupEntity.builder()
                 .name("Fairy")
-                .build());
-        eggGroupDao.create(EggGroupEntity.builder()
+                .build();
+        eggGroupDao.create(eggFairy);
+        EggGroupEntity eggField = EggGroupEntity.builder()
                 .name("Field")
-                .build());
-        eggGroupDao.create(EggGroupEntity.builder()
+                .build();
+        eggGroupDao.create(eggField);
+        EggGroupEntity eggFlying = EggGroupEntity.builder()
                 .name("Flying")
-                .build());
+                .build();
+        eggGroupDao.create(eggFlying);
         EggGroupEntity eggGrass = EggGroupEntity.builder()
                 .name("Grass")
                 .build();
         eggGroupDao.create(eggGrass);
-        eggGroupDao.create(EggGroupEntity.builder()
+        EggGroupEntity eggHuman = EggGroupEntity.builder()
                 .name("Human-like")
-                .build());
-        eggGroupDao.create(EggGroupEntity.builder()
+                .build();
+        eggGroupDao.create(eggHuman);
+        EggGroupEntity eggMineral = EggGroupEntity.builder()
                 .name("Mineral")
-                .build());
+                .build();
+        eggGroupDao.create(eggMineral);
         EggGroupEntity eggMonster = EggGroupEntity.builder()
                 .name("Monster")
                 .build();
@@ -140,90 +165,271 @@ public class PokemonManagerImpl implements PokemonManager {
                 .name("Water1")
                 .build();
         eggGroupDao.create(eggWater1);
-        eggGroupDao.create(EggGroupEntity.builder()
+        EggGroupEntity eggWater2 = EggGroupEntity.builder()
                 .name("Water2")
-                .build());
-        eggGroupDao.create(EggGroupEntity.builder()
+                .build();
+        eggGroupDao.create(eggWater2);
+        EggGroupEntity eggWater3 = EggGroupEntity.builder()
                 .name("Water3")
-                .build());
-        eggGroupDao.create(EggGroupEntity.builder()
+                .build();
+        eggGroupDao.create(eggWater3);
+        EggGroupEntity eggDitto = EggGroupEntity.builder()
                 .name("Ditto")
-                .build());
-        eggGroupDao.create(EggGroupEntity.builder()
+                .build();
+        eggGroupDao.create(eggDitto);
+        EggGroupEntity eggUndiscovered = EggGroupEntity.builder()
                 .name("Undiscovered")
-                .build());
+                .build();
+        eggGroupDao.create(eggUndiscovered);
 
-        pokemonDao.create(PokemonEntity.builder()
+        // ========== POKEMONS + EVOLUTIONS ==========
+
+        EvolutionGroupEntity bulbasaurEvolution = EvolutionGroupEntity.builder().build();
+        evolutionGroupDao.create(bulbasaurEvolution);
+
+        PokemonEntity bulbasaur = PokemonEntity.builder()
                 .nationalId("001")
                 .name("Bulbasaur")
                 .type1(grass)
                 .type2(poison)
                 .eggGroups(Arrays.asList(eggGrass, eggMonster))
                 .eggCycles(21)
+                .build();
+        pokemonDao.create(bulbasaur);
+        evolutionDao.create(EvolutionEntity.builder()
+                .pokemon(bulbasaur)
+                .evolutionRank(1)
+                .evolutionGroup(bulbasaurEvolution)
                 .build());
-        pokemonDao.create(PokemonEntity.builder()
+
+        PokemonEntity ivysaur = PokemonEntity.builder()
                 .nationalId("002")
                 .name("Ivysaur")
                 .type1(grass)
                 .type2(poison)
                 .eggGroups(Arrays.asList(eggGrass, eggMonster))
                 .eggCycles(21)
+                .build();
+        pokemonDao.create(ivysaur);
+        evolutionDao.create(EvolutionEntity.builder()
+                .pokemon(ivysaur)
+                .evolutionRank(2)
+                .evolutionGroup(bulbasaurEvolution)
                 .build());
-        pokemonDao.create(PokemonEntity.builder()
+
+        PokemonEntity venusaur = PokemonEntity.builder()
                 .nationalId("003")
                 .name("Venusaur")
                 .type1(grass)
                 .type2(poison)
                 .eggGroups(Arrays.asList(eggGrass, eggMonster))
                 .eggCycles(21)
+                .build();
+        pokemonDao.create(venusaur);
+        evolutionDao.create(EvolutionEntity.builder()
+                .pokemon(venusaur)
+                .evolutionRank(3)
+                .evolutionGroup(bulbasaurEvolution)
                 .build());
-        pokemonDao.create(PokemonEntity.builder()
+
+//        -----
+
+        EvolutionGroupEntity charmanderEvolution = EvolutionGroupEntity.builder().build();
+        evolutionGroupDao.create(charmanderEvolution);
+
+        PokemonEntity charmander = PokemonEntity.builder()
                 .nationalId("004")
                 .name("Charmander")
                 .type1(fire)
                 .type2(null)
                 .eggGroups(Arrays.asList(eggDragon, eggMonster))
                 .eggCycles(21)
+                .build();
+        pokemonDao.create(charmander);
+        evolutionDao.create(EvolutionEntity.builder()
+                .pokemon(charmander)
+                .evolutionRank(1)
+                .evolutionGroup(charmanderEvolution)
                 .build());
-        pokemonDao.create(PokemonEntity.builder()
+
+        PokemonEntity charmeleon = PokemonEntity.builder()
                 .nationalId("005")
                 .name("Charmeleon")
                 .type1(fire)
                 .type2(null)
                 .eggGroups(Arrays.asList(eggDragon, eggMonster))
                 .eggCycles(21)
+                .build();
+        pokemonDao.create(charmeleon);
+        evolutionDao.create(EvolutionEntity.builder()
+                .pokemon(charmeleon)
+                .evolutionRank(2)
+                .evolutionGroup(charmanderEvolution)
                 .build());
-        pokemonDao.create(PokemonEntity.builder()
+
+        PokemonEntity charizard = PokemonEntity.builder()
                 .nationalId("006")
                 .name("Charizard")
                 .type1(fire)
                 .type2(flying)
                 .eggGroups(Arrays.asList(eggDragon, eggMonster))
                 .eggCycles(21)
+                .build();
+        pokemonDao.create(charizard);
+        evolutionDao.create(EvolutionEntity.builder()
+                .pokemon(charizard)
+                .evolutionRank(3)
+                .evolutionGroup(charmanderEvolution)
                 .build());
-        pokemonDao.create(PokemonEntity.builder()
+
+//      -----
+
+        EvolutionGroupEntity squirtleEvolution = EvolutionGroupEntity.builder().build();
+        evolutionGroupDao.create(squirtleEvolution);
+
+        PokemonEntity squirtle = PokemonEntity.builder()
                 .nationalId("007")
                 .name("Squirtle")
                 .type1(water)
                 .type2(null)
                 .eggGroups(Arrays.asList(eggMonster, eggWater1))
                 .eggCycles(21)
+                .build();
+        pokemonDao.create(squirtle);
+        evolutionDao.create(EvolutionEntity.builder()
+                .pokemon(squirtle)
+                .evolutionRank(1)
+                .evolutionGroup(squirtleEvolution)
                 .build());
-        pokemonDao.create(PokemonEntity.builder()
+
+        PokemonEntity wartortle = PokemonEntity.builder()
                 .nationalId("008")
                 .name("Wartortle")
                 .type1(water)
                 .type2(null)
                 .eggGroups(Arrays.asList(eggMonster, eggWater1))
                 .eggCycles(21)
+                .build();
+        pokemonDao.create(wartortle);
+        evolutionDao.create(EvolutionEntity.builder()
+                .pokemon(wartortle)
+                .evolutionRank(2)
+                .evolutionGroup(squirtleEvolution)
                 .build());
-        pokemonDao.create(PokemonEntity.builder()
+
+        PokemonEntity blastoise = PokemonEntity.builder()
                 .nationalId("009")
                 .name("Blastoise")
                 .type1(water)
                 .type2(null)
                 .eggGroups(Arrays.asList(eggMonster, eggWater1))
                 .eggCycles(21)
+                .build();
+        pokemonDao.create(blastoise);
+        evolutionDao.create(EvolutionEntity.builder()
+                .pokemon(blastoise)
+                .evolutionRank(3)
+                .evolutionGroup(squirtleEvolution)
+                .build());
+
+//        -----
+
+        EvolutionGroupEntity caterpieEvolution = EvolutionGroupEntity.builder().build();
+        evolutionGroupDao.create(caterpieEvolution);
+
+        PokemonEntity caterpie = PokemonEntity.builder()
+                .nationalId("010")
+                .name("Caterpie")
+                .type1(bug)
+                .type2(null)
+                .eggGroups(Arrays.asList(eggBug))
+                .eggCycles(16)
+                .build();
+        pokemonDao.create(caterpie);
+        evolutionDao.create(EvolutionEntity.builder()
+                .pokemon(caterpie)
+                .evolutionRank(1)
+                .evolutionGroup(caterpieEvolution)
+                .build());
+
+        PokemonEntity metapod = PokemonEntity.builder()
+                .nationalId("011")
+                .name("Metapod")
+                .type1(bug)
+                .type2(null)
+                .eggGroups(Arrays.asList(eggBug))
+                .eggCycles(16)
+                .build();
+        pokemonDao.create(metapod);
+        evolutionDao.create(EvolutionEntity.builder()
+                .pokemon(metapod)
+                .evolutionRank(2)
+                .evolutionGroup(caterpieEvolution)
+                .build());
+
+        PokemonEntity butterfree = PokemonEntity.builder()
+                .nationalId("012")
+                .name("Butterfree")
+                .type1(bug)
+                .type2(flying)
+                .eggGroups(Arrays.asList(eggBug))
+                .eggCycles(16)
+                .build();
+        pokemonDao.create(butterfree);
+        evolutionDao.create(EvolutionEntity.builder()
+                .pokemon(butterfree)
+                .evolutionRank(3)
+                .evolutionGroup(caterpieEvolution)
+                .build());
+
+//        -----
+
+        EvolutionGroupEntity weedleEvolution = EvolutionGroupEntity.builder().build();
+        evolutionGroupDao.create(weedleEvolution);
+
+        PokemonEntity weedle = PokemonEntity.builder()
+                .nationalId("013")
+                .name("Weedle")
+                .type1(bug)
+                .type2(poison)
+                .eggGroups(Arrays.asList(eggBug))
+                .eggCycles(16)
+                .build();
+        pokemonDao.create(weedle);
+        evolutionDao.create(EvolutionEntity.builder()
+                .pokemon(weedle)
+                .evolutionRank(1)
+                .evolutionGroup(weedleEvolution)
+                .build());
+
+        PokemonEntity kakuna = PokemonEntity.builder()
+                .nationalId("014")
+                .name("Kakuna")
+                .type1(bug)
+                .type2(poison)
+                .eggGroups(Arrays.asList(eggBug))
+                .eggCycles(16)
+                .build();
+        pokemonDao.create(kakuna);
+        evolutionDao.create(EvolutionEntity.builder()
+                .pokemon(kakuna)
+                .evolutionRank(2)
+                .evolutionGroup(weedleEvolution)
+                .build());
+
+        PokemonEntity beedrill = PokemonEntity.builder()
+                .nationalId("015")
+                .name("Beedrill")
+                .type1(bug)
+                .type2(poison)
+                .eggGroups(Arrays.asList(eggBug))
+                .eggCycles(16)
+                .build();
+        pokemonDao.create(beedrill);
+        evolutionDao.create(EvolutionEntity.builder()
+                .pokemon(beedrill)
+                .evolutionRank(3)
+                .evolutionGroup(weedleEvolution)
                 .build());
 
         return "OK";

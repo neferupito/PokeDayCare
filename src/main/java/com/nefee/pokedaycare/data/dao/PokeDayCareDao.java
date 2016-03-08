@@ -6,9 +6,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class PokeDayCareDao<T extends PokeDayCareEntity> {
+
+    private static final Logger logger = LoggerFactory.getLogger(PokeDayCareDao.class);
 
     @Autowired
     @Getter
@@ -24,7 +28,8 @@ public abstract class PokeDayCareDao<T extends PokeDayCareEntity> {
 
     public void create(T entity) {
         sessionFactory.getCurrentSession().persist(entity);
-        System.out.println("== entity "+entityClass.getSimpleName()+" well created");
+
+        logger.info("Entity {} well created", entityClass.getName());
     }
 
     public void update(T entity) {
