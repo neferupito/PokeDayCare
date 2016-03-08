@@ -9,4 +9,5 @@ public class EvolutionDao extends PokeDayCareDao<EvolutionEntity> {
     public EvolutionDao() {
         super(EvolutionEntity.class);
     }
+
 }

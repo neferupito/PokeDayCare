@@ -8,7 +8,6 @@ public class SpringApplicationContext implements ApplicationContextAware {
 
     private static ApplicationContext appContext;
 
-    // Private constructor prevents instantiation from other classes
     private SpringApplicationContext() {
     }
 

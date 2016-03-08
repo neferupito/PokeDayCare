@@ -2,7 +2,15 @@
 
     <property name="LOG_HOME" value="poke-day-care-logs"/>
     <property name="default_log_pattern"
-              value='%d{"dd/MM/yyyy HH:mm:ss,SSS"} || %-5level || %marker || [%thread] || %logger || %msg%n'/>
+              value='%d{"dd/MM/yyyy HH:mm:ss,SSS"} || %-5level || [%thread] || %logger || %msg%n'/>
+    <property name="view_log_pattern"
+              value='%d{"dd/MM/yyyy HH:mm:ss,SSS"} || %-5level || VIEW || %marker || [%thread] || %logger || %msg%n'/>
+    <property name="logic_log_pattern"
+              value='%d{"dd/MM/yyyy HH:mm:ss,SSS"} || %-5level || LOGIC || %marker || [%thread] || %logger || %msg%n'/>
+    <property name="data_log_pattern"
+              value='%d{"dd/MM/yyyy HH:mm:ss,SSS"} || %-5level || DATA || %marker || [%thread] || %logger || %msg%n'/>
+    <property name="api_log_pattern"
+              value='%d{"dd/MM/yyyy HH:mm:ss,SSS"} || %-5level || API || %marker || [%thread] || %logger || %msg%n'/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -10,7 +18,7 @@
         </encoder>
     </appender>
 
-    <appender name="log-file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="view-logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_HOME}/pokedc-logs.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_HOME}/pokedc-logs.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
@@ -20,13 +28,70 @@
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
         <encoder>
-            <pattern>${default_log_pattern}</pattern>
+            <pattern>${view_log_pattern}</pattern>
         </encoder>
     </appender>
 
-    <logger name="com.nefee.pokedaycare" level="INFO" additivity="false">
+    <appender name="logic-logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/pokedc-logs.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/pokedc-logs.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${logic_log_pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="data-logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/pokedc-logs.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/pokedc-logs.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${data_log_pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="api-logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/pokedc-logs.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/pokedc-logs.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${api_log_pattern}</pattern>
+        </encoder>
+    </appender>
+
+
+    <logger name="com.nefee.pokedaycare.view" level="ALL" additivity="false">
         <appender-ref ref="STDOUT"/>
-        <appender-ref ref="log-file"/>
+        <appender-ref ref="view-logfile"/>
+    </logger>
+    <logger name="com.nefee.pokedaycare.logic" level="ALL" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="logic-logfile"/>
+    </logger>
+
+    <logger name="com.nefee.pokedaycare.data" level="ALL" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="data-logfile"/>
+    </logger>
+
+    <logger name="com.nefee.pokedaycare.api" level="ALL" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="api-logfile"/>
     </logger>
 
     <logger name="org.hibernate" level="ERROR" additivity="false">

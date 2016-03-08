@@ -15,7 +15,7 @@
 
         <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
 
-        <meta name="title" content="Pallet Town :: #{pageTitle}"/>
+        <meta name="title" content="Poke Day Care :: #{pageTitle}"/>
         <!-- 		<meta name="description" content="" /> -->
         <!-- 		<meta name="keywords" content="" /> -->
 
@@ -24,7 +24,7 @@
         <!--<link rel="shortcut icon" href="/img/favicon/favicon.png" type="image/png"/>-->
         <!--<link rel="icon" href="/img/favicon/favicon.png" type="image/png"/>-->
 
-        <!--<link rel="stylesheet" href="/resources/css/style.css" type="text/css"/>-->
+        <link rel="stylesheet" href="/resources/css/style.css" type="text/css"/>
         <!--<link rel="stylesheet" href="/resources/css/bootstrap-theme.min.css" type="text/css"/>-->
         <!--<link rel="stylesheet" href="/resources/css/bootstrap.min.css" type="text/css"/>-->
 
@@ -32,13 +32,18 @@
 
     </h:head>
     <h:body>
-        <div>
-            <div>
+        <div id="bodycontainer">
+            <div id="header">
+                <div id="logo">
+                    <!--LOGO-->
+                    <a href="home" class="pt-logo-header"/>
+                </div>
                 <div id="nav">
-                    <!-- // NAVIGATION BAR // -->
+                    <!--NAVIGATION BAR-->
                     <ul>
                         <li><a href="/home">Home</a></li>
                         <li><a href="/pokemon/Ivysaur">Pokemon</a></li>
+                        <li><a href="/api/db/generate">CreateDB</a></li>
                     </ul>
                 </div>
             </div>
@@ -54,7 +59,7 @@
                 <ui:insert name="content"/>
             </div>
 
-            <div>Copyright &copy; 2016, Nefee</div>
+            <div id="footer">Copyright &copy; 2016, Nefee</div>
         </div>
 
     </h:body>

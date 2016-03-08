@@ -6,7 +6,6 @@
 <hibernate-configuration>
 
     <session-factory>
-        <!-- Entities -->
         <mapping class="com.nefee.pokedaycare.data.entity.PokemonEntity"/>
         <mapping class="com.nefee.pokedaycare.data.entity.TypeEntity"/>
         <mapping class="com.nefee.pokedaycare.data.entity.EggGroupEntity"/>

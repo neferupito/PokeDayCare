@@ -8,6 +8,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class PokeDayCareDao<T extends PokeDayCareEntity> {
@@ -28,18 +29,23 @@ public abstract class PokeDayCareDao<T extends PokeDayCareEntity> {
 
     public void create(T entity) {
         sessionFactory.getCurrentSession().persist(entity);
-
         logger.info("Entity {} well created", entityClass.getName());
     }
 
     public void update(T entity) {
         sessionFactory.getCurrentSession().merge(entity);
+        logger.info("Entity {} well updated", entityClass.getName());
     }
 
     public void delete(T entity) throws PokeDayCareException {
         try {
+
             sessionFactory.getCurrentSession().delete(entity);
+
+            logger.info("Entity {} has been correctly deleted", entityClass.getName());
+
         } catch (HibernateException he) {
+            logger.error("Error while trying to delete {}", entityClass.getName(), he);
             throw new PokeDayCareException("Could't delete this entity: " + he.getMessage());
         }
     }
