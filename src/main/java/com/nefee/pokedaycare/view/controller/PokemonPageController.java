@@ -1,12 +1,15 @@
 package com.nefee.pokedaycare.view.controller;
 
 import com.nefee.pokedaycare.logic.exception.PokeDayCareException;
+import com.nefee.pokedaycare.logic.manager.DatabaseManager;
 import com.nefee.pokedaycare.logic.manager.PokemonManager;
 import com.nefee.pokedaycare.logic.model.Pokemon;
 import com.nefee.pokedaycare.view.utils.FacesUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.faces.bean.ManagedBean;

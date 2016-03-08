@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/pokemon")
 public class PokemonService {
 
-    private static final Logger logger = LoggerFactory.getLogger(PokemonService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PokemonService.class);
 
     private PokemonManager pokemonManager;
     private Gson gson;
@@ -33,7 +33,7 @@ public class PokemonService {
         try {
 
             String json = gson.toJson(pokemonManager.findByName(name));
-            PerfomanceLog.logPerf(startMillis, logger, "find Pokemon named " + name);
+            PerfomanceLog.logPerf(startMillis, LOGGER, "find Pokemon named " + name);
             return json;
 
         } catch (PokeDayCareException e) {

@@ -31,6 +31,11 @@
             <pattern>${view_log_pattern}</pattern>
         </encoder>
     </appender>
+    <appender name="view-STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${view_log_pattern}</pattern>
+        </encoder>
+    </appender>
 
     <appender name="logic-logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_HOME}/pokedc-logs.log</file>
@@ -41,6 +46,11 @@
                 <maxFileSize>50MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
+        <encoder>
+            <pattern>${logic_log_pattern}</pattern>
+        </encoder>
+    </appender>
+    <appender name="logic-STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>${logic_log_pattern}</pattern>
         </encoder>
@@ -59,6 +69,11 @@
             <pattern>${data_log_pattern}</pattern>
         </encoder>
     </appender>
+    <appender name="data-STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${data_log_pattern}</pattern>
+        </encoder>
+    </appender>
 
     <appender name="api-logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_HOME}/pokedc-logs.log</file>
@@ -73,36 +88,40 @@
             <pattern>${api_log_pattern}</pattern>
         </encoder>
     </appender>
+    <appender name="api-STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${api_log_pattern}</pattern>
+        </encoder>
+    </appender>
 
-
-    <logger name="com.nefee.pokedaycare.view" level="ALL" additivity="false">
-        <appender-ref ref="STDOUT"/>
+    <logger name="com.nefee.pokedaycare.view" level="DEBUG" additivity="false">
+        <appender-ref ref="view-STDOUT"/>
         <appender-ref ref="view-logfile"/>
     </logger>
-    <logger name="com.nefee.pokedaycare.logic" level="ALL" additivity="false">
-        <appender-ref ref="STDOUT"/>
+    <logger name="com.nefee.pokedaycare.logic" level="DEBUG" additivity="false">
+        <appender-ref ref="logic-STDOUT"/>
         <appender-ref ref="logic-logfile"/>
     </logger>
 
-    <logger name="com.nefee.pokedaycare.data" level="ALL" additivity="false">
-        <appender-ref ref="STDOUT"/>
+    <logger name="com.nefee.pokedaycare.data" level="DEBUG" additivity="false">
+        <appender-ref ref="data-STDOUT"/>
         <appender-ref ref="data-logfile"/>
     </logger>
 
-    <logger name="com.nefee.pokedaycare.api" level="ALL" additivity="false">
-        <appender-ref ref="STDOUT"/>
+    <logger name="com.nefee.pokedaycare.api" level="DEBUG" additivity="false">
+        <appender-ref ref="api-STDOUT"/>
         <appender-ref ref="api-logfile"/>
     </logger>
 
-    <logger name="org.hibernate" level="ERROR" additivity="false">
+    <logger name="org.hibernate" level="DEBUG" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 
-    <logger name="org.springframework" level="ERROR" additivity="false">
+    <logger name="org.springframework" level="DEBUG" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 
-    <root level="ALL">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
     </root>
 

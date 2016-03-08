@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/status")
 public class StatusService {
 
-    private static final Logger logger = LoggerFactory.getLogger(StatusService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StatusService.class);
 
     private final String IS_ALIVE = "Poke Day Care is alive :)";
 
@@ -19,7 +19,7 @@ public class StatusService {
     @Path("/isAlive")
     @Produces((MediaType.TEXT_PLAIN))
     public String isAlive() {
-        logger.info(IS_ALIVE);
+        LOGGER.info(IS_ALIVE);
         return IS_ALIVE;
     }
 

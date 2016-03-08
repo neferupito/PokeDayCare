@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/db")
 public class DatabaseService {
 
-    private static final Logger logger = LoggerFactory.getLogger(DatabaseService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseService.class);
 
     private DatabaseManager databaseManager;
 
@@ -27,7 +27,7 @@ public class DatabaseService {
         load();
         String result = databaseManager.createDB();
 
-        PerfomanceLog.logPerf(startMillis, logger, "create Database");
+        PerfomanceLog.logPerf(startMillis, LOGGER, "create Database");
 
         return result;
     }
