@@ -12,6 +12,10 @@ public class Pokemon {
 
     private String name;
 
-    private DateTime birth;
+    private String nationalId;
+
+    private String type1;
+
+    private String type2;
 
 }

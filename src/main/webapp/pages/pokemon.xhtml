@@ -15,7 +15,9 @@
         <h:form>
 
             <h:outputText value="#{pokemonPageController.pokemon.name}" />
-            <h:outputText value="#{pokemonPageController.pokemon.birth}" />
+            <h:outputText value="#{pokemonPageController.pokemon.nationalId}" />
+            <h:outputText value="#{pokemonPageController.pokemon.type1}" />
+            <h:outputText value="#{pokemonPageController.pokemon.type2 ne null? pokemonPageController.pokemon.type2 : 'non'}" />
 
         </h:form>
     </ui:define>

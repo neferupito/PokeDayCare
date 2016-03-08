@@ -40,7 +40,6 @@ public class PokemonManagerImpl implements PokemonManager {
 
     }
 
-    @Override
     @Transactional
     public String createDB() {
 
