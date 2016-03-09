@@ -1,6 +1,8 @@
 package com.nefee.pokedaycare.logic.manager.impl;
 
-import com.nefee.pokedaycare.data.dao.*;
+import com.nefee.pokedaycare.data.dao.EvolutionDao;
+import com.nefee.pokedaycare.data.dao.EvolutionGroupDao;
+import com.nefee.pokedaycare.data.dao.PokemonDao;
 import com.nefee.pokedaycare.data.entity.*;
 import com.nefee.pokedaycare.logic.manager.DatabaseManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.Optional;
 
-@Service("databaseManager")
-@Transactional(readOnly = true)
+@Service ("databaseManager")
+@Transactional (readOnly = true)
 public class DatabaseManagerImpl implements DatabaseManager {
 
     @Autowired
     private PokemonDao pokemonDao;
-    @Autowired
-    private TypeDao typeDao;
-    @Autowired
-    private EggGroupDao eggGroupDao;
     @Autowired
     private EvolutionDao evolutionDao;
     @Autowired
@@ -32,155 +30,16 @@ public class DatabaseManagerImpl implements DatabaseManager {
 
         if (!optional.isPresent()) {
 
-            // ========== TYPES ==========
-
-            TypeEntity normal = TypeEntity.builder()
-                    .name("Normal")
-                    .build();
-            typeDao.create(normal);
-            TypeEntity fire = TypeEntity.builder()
-                    .name("Fire")
-                    .build();
-            typeDao.create(fire);
-            TypeEntity water = TypeEntity.builder()
-                    .name("Water")
-                    .build();
-            typeDao.create(water);
-            TypeEntity electric = TypeEntity.builder()
-                    .name("Electric")
-                    .build();
-            typeDao.create(electric);
-            TypeEntity grass = TypeEntity.builder()
-                    .name("Grass")
-                    .build();
-            typeDao.create(grass);
-            TypeEntity ice = TypeEntity.builder()
-                    .name("Ice")
-                    .build();
-            typeDao.create(ice);
-            TypeEntity fighting = TypeEntity.builder()
-                    .name("Fighting")
-                    .build();
-            typeDao.create(fighting);
-            TypeEntity poison = TypeEntity.builder()
-                    .name("Poison")
-                    .build();
-            typeDao.create(poison);
-            TypeEntity ground = TypeEntity.builder()
-                    .name("Ground")
-                    .build();
-            typeDao.create(ground);
-            TypeEntity flying = TypeEntity.builder()
-                    .name("Flying")
-                    .build();
-            typeDao.create(flying);
-            TypeEntity psychic = TypeEntity.builder()
-                    .name("Psychic")
-                    .build();
-            typeDao.create(psychic);
-            TypeEntity bug = TypeEntity.builder()
-                    .name("Bug")
-                    .build();
-            typeDao.create(bug);
-            TypeEntity rock = TypeEntity.builder()
-                    .name("Rock")
-                    .build();
-            typeDao.create(rock);
-            TypeEntity ghost = TypeEntity.builder()
-                    .name("Ghost")
-                    .build();
-            typeDao.create(ghost);
-            TypeEntity dragon = TypeEntity.builder()
-                    .name("Dragon")
-                    .build();
-            typeDao.create(dragon);
-            TypeEntity dark = TypeEntity.builder()
-                    .name("Dark")
-                    .build();
-            typeDao.create(dark);
-            TypeEntity steel = TypeEntity.builder()
-                    .name("Steel")
-                    .build();
-            typeDao.create(steel);
-            TypeEntity fairy = TypeEntity.builder()
-                    .name("Fairy")
-                    .build();
-            typeDao.create(fairy);
-
-            // ========== EGG GROUPS ==========
-
-            EggGroupEntity eggAmorphous = EggGroupEntity.builder()
-                    .name("Amorphous")
-                    .build();
-            eggGroupDao.create(eggAmorphous);
-            EggGroupEntity eggBug = EggGroupEntity.builder()
-                    .name("Bug")
-                    .build();
-            eggGroupDao.create(eggBug);
-            EggGroupEntity eggDragon = EggGroupEntity.builder()
-                    .name("Dragon")
-                    .build();
-            eggGroupDao.create(eggDragon);
-            EggGroupEntity eggFairy = EggGroupEntity.builder()
-                    .name("Fairy")
-                    .build();
-            eggGroupDao.create(eggFairy);
-            EggGroupEntity eggField = EggGroupEntity.builder()
-                    .name("Field")
-                    .build();
-            eggGroupDao.create(eggField);
-            EggGroupEntity eggFlying = EggGroupEntity.builder()
-                    .name("Flying")
-                    .build();
-            eggGroupDao.create(eggFlying);
-            EggGroupEntity eggGrass = EggGroupEntity.builder()
-                    .name("Grass")
-                    .build();
-            eggGroupDao.create(eggGrass);
-            EggGroupEntity eggHuman = EggGroupEntity.builder()
-                    .name("Human-like")
-                    .build();
-            eggGroupDao.create(eggHuman);
-            EggGroupEntity eggMineral = EggGroupEntity.builder()
-                    .name("Mineral")
-                    .build();
-            eggGroupDao.create(eggMineral);
-            EggGroupEntity eggMonster = EggGroupEntity.builder()
-                    .name("Monster")
-                    .build();
-            eggGroupDao.create(eggMonster);
-            EggGroupEntity eggWater1 = EggGroupEntity.builder()
-                    .name("Water1")
-                    .build();
-            eggGroupDao.create(eggWater1);
-            EggGroupEntity eggWater2 = EggGroupEntity.builder()
-                    .name("Water2")
-                    .build();
-            eggGroupDao.create(eggWater2);
-            EggGroupEntity eggWater3 = EggGroupEntity.builder()
-                    .name("Water3")
-                    .build();
-            eggGroupDao.create(eggWater3);
-            EggGroupEntity eggDitto = EggGroupEntity.builder()
-                    .name("Ditto")
-                    .build();
-            eggGroupDao.create(eggDitto);
-            EggGroupEntity eggUndiscovered = EggGroupEntity.builder()
-                    .name("Undiscovered")
-                    .build();
-            eggGroupDao.create(eggUndiscovered);
-
             // ========== POKEMONS + EVOLUTIONS ==========
 
             PokemonEntity ditto = PokemonEntity.builder()
-                    .id(132L)
-                    .nationalId("132")
+                    .nationalId(132)
                     .name("Ditto")
-                    .type1(normal)
+                    .type1(Type.NORMAL)
                     .type2(null)
                     .percentMale(null)
                     .percentFemale(null)
-                    .eggGroups(Arrays.asList(eggDitto))
+                    .eggGroups(Arrays.asList(EggGroup.DITTO))
                     .eggCycles(21)
                     .build();
             pokemonDao.create(ditto);
@@ -189,13 +48,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
             evolutionGroupDao.create(bulbasaurEvolution);
 
             PokemonEntity bulbasaur = PokemonEntity.builder()
-                    .nationalId("001")
+                    .nationalId(1)
                     .name("Bulbasaur")
-                    .type1(grass)
-                    .type2(poison)
+                    .type1(Type.GRASS)
+                    .type2(Type.POISON)
                     .percentMale(87.5)
                     .percentFemale(12.5)
-                    .eggGroups(Arrays.asList(eggGrass, eggMonster))
+                    .eggGroups(Arrays.asList(EggGroup.GRASS, EggGroup.MONSTER))
                     .eggCycles(21)
                     .build();
             pokemonDao.create(bulbasaur);
@@ -206,13 +65,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .build());
 
             PokemonEntity ivysaur = PokemonEntity.builder()
-                    .nationalId("002")
+                    .nationalId(2)
                     .name("Ivysaur")
-                    .type1(grass)
-                    .type2(poison)
+                    .type1(Type.GRASS)
+                    .type2(Type.POISON)
                     .percentMale(87.5)
                     .percentFemale(12.5)
-                    .eggGroups(Arrays.asList(eggGrass, eggMonster))
+                    .eggGroups(Arrays.asList(EggGroup.GRASS, EggGroup.MONSTER))
                     .eggCycles(21)
                     .build();
             pokemonDao.create(ivysaur);
@@ -223,13 +82,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .build());
 
             PokemonEntity venusaur = PokemonEntity.builder()
-                    .nationalId("003")
+                    .nationalId(3)
                     .name("Venusaur")
-                    .type1(grass)
-                    .type2(poison)
+                    .type1(Type.GRASS)
+                    .type2(Type.POISON)
                     .percentMale(87.5)
                     .percentFemale(12.5)
-                    .eggGroups(Arrays.asList(eggGrass, eggMonster))
+                    .eggGroups(Arrays.asList(EggGroup.GRASS, EggGroup.MONSTER))
                     .eggCycles(21)
                     .build();
             pokemonDao.create(venusaur);
@@ -245,13 +104,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
             evolutionGroupDao.create(charmanderEvolution);
 
             PokemonEntity charmander = PokemonEntity.builder()
-                    .nationalId("004")
+                    .nationalId(4)
                     .name("Charmander")
-                    .type1(fire)
+                    .type1(Type.FIRE)
                     .type2(null)
                     .percentMale(87.5)
                     .percentFemale(12.5)
-                    .eggGroups(Arrays.asList(eggDragon, eggMonster))
+                    .eggGroups(Arrays.asList(EggGroup.DRAGON, EggGroup.MONSTER))
                     .eggCycles(21)
                     .build();
             pokemonDao.create(charmander);
@@ -262,13 +121,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .build());
 
             PokemonEntity charmeleon = PokemonEntity.builder()
-                    .nationalId("005")
+                    .nationalId(5)
                     .name("Charmeleon")
-                    .type1(fire)
+                    .type1(Type.FIRE)
                     .type2(null)
                     .percentMale(87.5)
                     .percentFemale(12.5)
-                    .eggGroups(Arrays.asList(eggDragon, eggMonster))
+                    .eggGroups(Arrays.asList(EggGroup.DRAGON, EggGroup.MONSTER))
                     .eggCycles(21)
                     .build();
             pokemonDao.create(charmeleon);
@@ -279,13 +138,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .build());
 
             PokemonEntity charizard = PokemonEntity.builder()
-                    .nationalId("006")
+                    .nationalId(6)
                     .name("Charizard")
-                    .type1(fire)
-                    .type2(flying)
+                    .type1(Type.FIRE)
+                    .type2(Type.FLYING)
                     .percentMale(87.5)
                     .percentFemale(12.5)
-                    .eggGroups(Arrays.asList(eggDragon, eggMonster))
+                    .eggGroups(Arrays.asList(EggGroup.DRAGON, EggGroup.MONSTER))
                     .eggCycles(21)
                     .build();
             pokemonDao.create(charizard);
@@ -301,13 +160,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
             evolutionGroupDao.create(squirtleEvolution);
 
             PokemonEntity squirtle = PokemonEntity.builder()
-                    .nationalId("007")
+                    .nationalId(7)
                     .name("Squirtle")
-                    .type1(water)
+                    .type1(Type.WATER)
                     .type2(null)
                     .percentMale(87.5)
                     .percentFemale(12.5)
-                    .eggGroups(Arrays.asList(eggMonster, eggWater1))
+                    .eggGroups(Arrays.asList(EggGroup.MONSTER, EggGroup.WATER1))
                     .eggCycles(21)
                     .build();
             pokemonDao.create(squirtle);
@@ -318,13 +177,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .build());
 
             PokemonEntity wartortle = PokemonEntity.builder()
-                    .nationalId("008")
+                    .nationalId(8)
                     .name("Wartortle")
-                    .type1(water)
+                    .type1(Type.WATER)
                     .type2(null)
                     .percentMale(87.5)
                     .percentFemale(12.5)
-                    .eggGroups(Arrays.asList(eggMonster, eggWater1))
+                    .eggGroups(Arrays.asList(EggGroup.MONSTER, EggGroup.WATER1))
                     .eggCycles(21)
                     .build();
             pokemonDao.create(wartortle);
@@ -335,13 +194,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .build());
 
             PokemonEntity blastoise = PokemonEntity.builder()
-                    .nationalId("009")
+                    .nationalId(9)
                     .name("Blastoise")
-                    .type1(water)
+                    .type1(Type.WATER)
                     .type2(null)
                     .percentMale(87.5)
                     .percentFemale(12.5)
-                    .eggGroups(Arrays.asList(eggMonster, eggWater1))
+                    .eggGroups(Arrays.asList(EggGroup.MONSTER, EggGroup.WATER1))
                     .eggCycles(21)
                     .build();
             pokemonDao.create(blastoise);
@@ -357,13 +216,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
             evolutionGroupDao.create(caterpieEvolution);
 
             PokemonEntity caterpie = PokemonEntity.builder()
-                    .nationalId("010")
+                    .nationalId(10)
                     .name("Caterpie")
-                    .type1(bug)
+                    .type1(Type.BUG)
                     .type2(null)
                     .percentMale(50d)
                     .percentFemale(50d)
-                    .eggGroups(Arrays.asList(eggBug))
+                    .eggGroups(Arrays.asList(EggGroup.BUG))
                     .eggCycles(16)
                     .build();
             pokemonDao.create(caterpie);
@@ -374,13 +233,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .build());
 
             PokemonEntity metapod = PokemonEntity.builder()
-                    .nationalId("011")
+                    .nationalId(11)
                     .name("Metapod")
-                    .type1(bug)
+                    .type1(Type.BUG)
                     .type2(null)
                     .percentMale(50d)
                     .percentFemale(50d)
-                    .eggGroups(Arrays.asList(eggBug))
+                    .eggGroups(Arrays.asList(EggGroup.BUG))
                     .eggCycles(16)
                     .build();
             pokemonDao.create(metapod);
@@ -391,13 +250,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .build());
 
             PokemonEntity butterfree = PokemonEntity.builder()
-                    .nationalId("012")
+                    .nationalId(12)
                     .name("Butterfree")
-                    .type1(bug)
-                    .type2(flying)
+                    .type1(Type.BUG)
+                    .type2(Type.FLYING)
                     .percentMale(50d)
                     .percentFemale(50d)
-                    .eggGroups(Arrays.asList(eggBug))
+                    .eggGroups(Arrays.asList(EggGroup.BUG))
                     .eggCycles(16)
                     .build();
             pokemonDao.create(butterfree);
@@ -413,13 +272,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
             evolutionGroupDao.create(weedleEvolution);
 
             PokemonEntity weedle = PokemonEntity.builder()
-                    .nationalId("013")
+                    .nationalId(13)
                     .name("Weedle")
-                    .type1(bug)
-                    .type2(poison)
+                    .type1(Type.BUG)
+                    .type2(Type.POISON)
                     .percentMale(50d)
                     .percentFemale(50d)
-                    .eggGroups(Arrays.asList(eggBug))
+                    .eggGroups(Arrays.asList(EggGroup.BUG))
                     .eggCycles(16)
                     .build();
             pokemonDao.create(weedle);
@@ -430,13 +289,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .build());
 
             PokemonEntity kakuna = PokemonEntity.builder()
-                    .nationalId("014")
+                    .nationalId(14)
                     .name("Kakuna")
-                    .type1(bug)
-                    .type2(poison)
+                    .type1(Type.BUG)
+                    .type2(Type.POISON)
                     .percentMale(50d)
                     .percentFemale(50d)
-                    .eggGroups(Arrays.asList(eggBug))
+                    .eggGroups(Arrays.asList(EggGroup.BUG))
                     .eggCycles(16)
                     .build();
             pokemonDao.create(kakuna);
@@ -447,13 +306,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .build());
 
             PokemonEntity beedrill = PokemonEntity.builder()
-                    .nationalId("015")
+                    .nationalId(15)
                     .name("Beedrill")
-                    .type1(bug)
-                    .type2(poison)
+                    .type1(Type.BUG)
+                    .type2(Type.POISON)
                     .percentMale(50d)
                     .percentFemale(50d)
-                    .eggGroups(Arrays.asList(eggBug))
+                    .eggGroups(Arrays.asList(EggGroup.BUG))
                     .eggCycles(16)
                     .build();
             pokemonDao.create(beedrill);
@@ -469,13 +328,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
             evolutionGroupDao.create(pidgeyEvolution);
 
             PokemonEntity pidgey = PokemonEntity.builder()
-                    .nationalId("016")
+                    .nationalId(16)
                     .name("Pidgey")
-                    .type1(normal)
-                    .type2(flying)
+                    .type1(Type.NORMAL)
+                    .type2(Type.FLYING)
                     .percentMale(50d)
                     .percentFemale(50d)
-                    .eggGroups(Arrays.asList(eggFlying))
+                    .eggGroups(Arrays.asList(EggGroup.FLYING))
                     .eggCycles(16)
                     .build();
             pokemonDao.create(pidgey);
@@ -486,13 +345,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .build());
 
             PokemonEntity pidgeotto = PokemonEntity.builder()
-                    .nationalId("017")
+                    .nationalId(17)
                     .name("Pidgeotto")
-                    .type1(normal)
-                    .type2(flying)
+                    .type1(Type.NORMAL)
+                    .type2(Type.FLYING)
                     .percentMale(50d)
                     .percentFemale(50d)
-                    .eggGroups(Arrays.asList(eggFlying))
+                    .eggGroups(Arrays.asList(EggGroup.FLYING))
                     .eggCycles(16)
                     .build();
             pokemonDao.create(pidgeotto);
@@ -503,13 +362,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .build());
 
             PokemonEntity pidgeot = PokemonEntity.builder()
-                    .nationalId("018")
+                    .nationalId(18)
                     .name("Pidgeot")
-                    .type1(normal)
-                    .type2(flying)
+                    .type1(Type.NORMAL)
+                    .type2(Type.FLYING)
                     .percentMale(50d)
                     .percentFemale(50d)
-                    .eggGroups(Arrays.asList(eggFlying))
+                    .eggGroups(Arrays.asList(EggGroup.FLYING))
                     .eggCycles(16)
                     .build();
             pokemonDao.create(pidgeot);
@@ -525,13 +384,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
             evolutionGroupDao.create(rattataEvolution);
 
             PokemonEntity rattata = PokemonEntity.builder()
-                    .nationalId("019")
+                    .nationalId(19)
                     .name("Rattata")
-                    .type1(normal)
+                    .type1(Type.NORMAL)
                     .type2(null)
                     .percentMale(50d)
                     .percentFemale(50d)
-                    .eggGroups(Arrays.asList(eggField))
+                    .eggGroups(Arrays.asList(EggGroup.FIELD))
                     .eggCycles(16)
                     .build();
             pokemonDao.create(rattata);
@@ -542,13 +401,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .build());
 
             PokemonEntity raticate = PokemonEntity.builder()
-                    .nationalId("020")
+                    .nationalId(20)
                     .name("Raticate")
-                    .type1(normal)
+                    .type1(Type.NORMAL)
                     .type2(null)
                     .percentMale(50d)
                     .percentFemale(50d)
-                    .eggGroups(Arrays.asList(eggField))
+                    .eggGroups(Arrays.asList(EggGroup.FIELD))
                     .eggCycles(16)
                     .build();
             pokemonDao.create(raticate);
@@ -564,13 +423,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
             evolutionGroupDao.create(spearowEvolution);
 
             PokemonEntity spearow = PokemonEntity.builder()
-                    .nationalId("021")
+                    .nationalId(21)
                     .name("Spearow")
-                    .type1(normal)
-                    .type2(flying)
+                    .type1(Type.NORMAL)
+                    .type2(Type.FLYING)
                     .percentMale(50d)
                     .percentFemale(50d)
-                    .eggGroups(Arrays.asList(eggFlying))
+                    .eggGroups(Arrays.asList(EggGroup.FLYING))
                     .eggCycles(16)
                     .build();
             pokemonDao.create(spearow);
@@ -581,13 +440,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .build());
 
             PokemonEntity fearow = PokemonEntity.builder()
-                    .nationalId("022")
+                    .nationalId(22)
                     .name("Fearow")
-                    .type1(normal)
-                    .type2(flying)
+                    .type1(Type.NORMAL)
+                    .type2(Type.FLYING)
                     .percentMale(50d)
                     .percentFemale(50d)
-                    .eggGroups(Arrays.asList(eggFlying))
+                    .eggGroups(Arrays.asList(EggGroup.FLYING))
                     .eggCycles(16)
                     .build();
             pokemonDao.create(fearow);
@@ -603,13 +462,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
             evolutionGroupDao.create(ekansEvolution);
 
             PokemonEntity ekans = PokemonEntity.builder()
-                    .nationalId("023")
+                    .nationalId(23)
                     .name("Ekans")
-                    .type1(poison)
+                    .type1(Type.POISON)
                     .type2(null)
                     .percentMale(50d)
                     .percentFemale(50d)
-                    .eggGroups(Arrays.asList(eggDragon, eggField))
+                    .eggGroups(Arrays.asList(EggGroup.DRAGON, EggGroup.FIELD))
                     .eggCycles(21)
                     .build();
             pokemonDao.create(ekans);
@@ -620,13 +479,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .build());
 
             PokemonEntity arbok = PokemonEntity.builder()
-                    .nationalId("024")
+                    .nationalId(24)
                     .name("Arbok")
-                    .type1(poison)
+                    .type1(Type.POISON)
                     .type2(null)
                     .percentMale(50d)
                     .percentFemale(50d)
-                    .eggGroups(Arrays.asList(eggDragon, eggField))
+                    .eggGroups(Arrays.asList(EggGroup.DRAGON, EggGroup.FIELD))
                     .eggCycles(21)
                     .build();
             pokemonDao.create(arbok);
@@ -642,13 +501,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
             evolutionGroupDao.create(pikaEvolution);
 
             PokemonEntity pika = PokemonEntity.builder()
-                    .nationalId("025")
+                    .nationalId(25)
                     .name("Pikachu")
-                    .type1(electric)
+                    .type1(Type.ELECTRIC)
                     .type2(null)
                     .percentMale(50d)
                     .percentFemale(50d)
-                    .eggGroups(Arrays.asList(eggFairy, eggField))
+                    .eggGroups(Arrays.asList(EggGroup.FAIRY, EggGroup.FIELD))
                     .eggCycles(11)
                     .build();
             pokemonDao.create(pika);
@@ -659,13 +518,13 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .build());
 
             PokemonEntity raichu = PokemonEntity.builder()
-                    .nationalId("026")
+                    .nationalId(26)
                     .name("Raichu")
-                    .type1(electric)
+                    .type1(Type.ELECTRIC)
                     .type2(null)
                     .percentMale(50d)
                     .percentFemale(50d)
-                    .eggGroups(Arrays.asList(eggFairy, eggField))
+                    .eggGroups(Arrays.asList(EggGroup.FAIRY, EggGroup.FIELD))
                     .eggCycles(11)
                     .build();
             pokemonDao.create(raichu);
@@ -673,6 +532,157 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .pokemon(raichu)
                     .evolutionRank(3)
                     .evolutionGroup(pikaEvolution)
+                    .build());
+
+//        -----
+
+            EvolutionGroupEntity sabeEvolution = EvolutionGroupEntity.builder().build();
+            evolutionGroupDao.create(sabeEvolution);
+
+            PokemonEntity sandshrew = PokemonEntity.builder()
+                    .nationalId(27)
+                    .name("Sandshrew")
+                    .type1(Type.GROUND)
+                    .type2(null)
+                    .percentMale(50d)
+                    .percentFemale(50d)
+                    .eggGroups(Arrays.asList(EggGroup.FIELD))
+                    .eggCycles(21)
+                    .build();
+            pokemonDao.create(sandshrew);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .pokemon(sandshrew)
+                    .evolutionRank(1)
+                    .evolutionGroup(sabeEvolution)
+                    .build());
+
+            PokemonEntity sandslash = PokemonEntity.builder()
+                    .nationalId(28)
+                    .name("Sandslash")
+                    .type1(Type.GROUND)
+                    .type2(null)
+                    .percentMale(50d)
+                    .percentFemale(50d)
+                    .eggGroups(Arrays.asList(EggGroup.FIELD))
+                    .eggCycles(21)
+                    .build();
+            pokemonDao.create(sandslash);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .pokemon(sandslash)
+                    .evolutionRank(2)
+                    .evolutionGroup(sabeEvolution)
+                    .build());
+
+//        -----
+
+            EvolutionGroupEntity nidoFEvolution = EvolutionGroupEntity.builder().build();
+            evolutionGroupDao.create(nidoFEvolution);
+
+            PokemonEntity nidoF = PokemonEntity.builder()
+                    .nationalId(29)
+                    .name("NidoranF")
+                    .type1(Type.POISON)
+                    .type2(null)
+                    .percentMale(0d)
+                    .percentFemale(100d)
+                    .eggGroups(Arrays.asList(EggGroup.FIELD, EggGroup.MONSTER))
+                    .eggCycles(21)
+                    .build();
+            pokemonDao.create(nidoF);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .pokemon(nidoF)
+                    .evolutionRank(1)
+                    .evolutionGroup(nidoFEvolution)
+                    .build());
+
+            PokemonEntity nidorina = PokemonEntity.builder()
+                    .nationalId(30)
+                    .name("Nidorina")
+                    .type1(Type.POISON)
+                    .type2(null)
+                    .percentMale(0d)
+                    .percentFemale(100d)
+                    .eggGroups(Arrays.asList(EggGroup.UNDISCOVERED))
+                    .eggCycles(21)
+                    .build();
+            pokemonDao.create(nidorina);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .pokemon(nidorina)
+                    .evolutionRank(2)
+                    .evolutionGroup(nidoFEvolution)
+                    .build());
+
+            PokemonEntity nidoqueen = PokemonEntity.builder()
+                    .nationalId(31)
+                    .name("Nidoqueen")
+                    .type1(Type.POISON)
+                    .type2(Type.GROUND)
+                    .percentMale(0d)
+                    .percentFemale(100d)
+                    .eggGroups(Arrays.asList(EggGroup.UNDISCOVERED))
+                    .eggCycles(21)
+                    .build();
+            pokemonDao.create(nidoqueen);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .pokemon(nidoqueen)
+                    .evolutionRank(3)
+                    .evolutionGroup(nidoFEvolution)
+                    .build());
+
+//        -----
+
+            EvolutionGroupEntity nidoMEvolution = EvolutionGroupEntity.builder().build();
+            evolutionGroupDao.create(nidoMEvolution);
+
+            PokemonEntity nidoM = PokemonEntity.builder()
+                    .nationalId(32)
+                    .name("NidoranM")
+                    .type1(Type.POISON)
+                    .type2(null)
+                    .percentMale(100d)
+                    .percentFemale(0d)
+                    .eggGroups(Arrays.asList(EggGroup.FIELD, EggGroup.MONSTER))
+                    .eggCycles(21)
+                    .build();
+            pokemonDao.create(nidoM);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .pokemon(nidoM)
+                    .evolutionRank(1)
+                    .evolutionGroup(nidoMEvolution)
+                    .build());
+
+            PokemonEntity nidorino = PokemonEntity.builder()
+                    .nationalId(33)
+                    .name("Nidorino")
+                    .type1(Type.POISON)
+                    .type2(null)
+                    .percentMale(100d)
+                    .percentFemale(0d)
+                    .eggGroups(Arrays.asList(EggGroup.FIELD, EggGroup.MONSTER))
+                    .eggCycles(21)
+                    .build();
+            pokemonDao.create(nidorino);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .pokemon(nidorino)
+                    .evolutionRank(2)
+                    .evolutionGroup(nidoMEvolution)
+                    .build());
+
+            PokemonEntity nidoking = PokemonEntity.builder()
+                    .nationalId(34)
+                    .name("Nidoking")
+                    .type1(Type.POISON)
+                    .type2(Type.GROUND)
+                    .percentMale(100d)
+                    .percentFemale(0d)
+                    .eggGroups(Arrays.asList(EggGroup.FIELD, EggGroup.MONSTER))
+                    .eggCycles(21)
+                    .build();
+            pokemonDao.create(nidoking);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .pokemon(nidoking)
+                    .evolutionRank(3)
+                    .evolutionGroup(nidoMEvolution)
                     .build());
 
             return "OK";

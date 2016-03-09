@@ -11,52 +11,51 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "pokemons")
-@NamedQueries({
-        @NamedQuery(name = "PokemonEntity.findByName", query =
+@Table (name = "POKEMONS")
+@NamedQueries ({
+        @NamedQuery (name = "PokemonEntity.findByName", query =
                 "SELECT p FROM PokemonEntity p " +
                         "WHERE p.name = :pokemon_name"),
-        @NamedQuery(name = "PokemonEntity.findAll", query =
+        @NamedQuery (name = "PokemonEntity.findAll", query =
                 "SELECT p FROM PokemonEntity p")
+//        ,
+//        @NamedQuery (name = "PokemonEntity.findAllPokemonsByEggGroup", query =
+//                "SELECT p FROM PokemonEntity p " +
+//                        "WHERE :egg_group in p.eggGroups")
 })
 public class PokemonEntity extends PokeDayCareEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "pokemon_id", unique = true, nullable = false)
-    private Long id;
+    @Column (name = "NATIONAL_ID", unique = true, nullable = false)
+    private Integer nationalId;
 
-    @Column(name = "national_id", nullable = false)
-    private String nationalId;
-
-    @Column(name = "name", nullable = false)
+    @Column (name = "NAME", nullable = false)
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "type1_id", nullable = false)
-    private TypeEntity type1;
+    @Column (name = "TYPE1", nullable = false)
+    @Enumerated (EnumType.STRING)
+    private Type type1;
 
-    @ManyToOne
-    @JoinColumn(name = "type2_id")
-    private TypeEntity type2;
+    @Column (name = "TYPE2")
+    @Enumerated (EnumType.STRING)
+    private Type type2;
 
-    @Column(name = "percent_male")
+    @Column (name = "PERCENT_MALE")
     private Double percentMale;
 
-    @Column(name = "percent_female")
+    @Column (name = "PERCENT_FEMALE")
     private Double percentFemale;
 
-    @ManyToMany
-    @JoinTable(
-            name = "pokemons_egg_groups",
-            joinColumns = @JoinColumn(name = "pokemon_id", referencedColumnName = "pokemon_id"),
-            inverseJoinColumns = @JoinColumn(name = "egg_group_id", referencedColumnName = "egg_group_id"))
-    private List<EggGroupEntity> eggGroups;
+    @ElementCollection (targetClass = EggGroup.class)
+    @CollectionTable (name = "EGG_GROUPS",
+            joinColumns = @JoinColumn (name = "POKEMON_ID"))
+    @Column (name = "EGG_GROUP_ID")
+    private List<EggGroup> eggGroups;
 
-    @Column(name = "eggcycles")
+    @Column (name = "EGGCYCLES")
     private Integer eggCycles;
 
-    @OneToOne(mappedBy = "pokemon")
+    @OneToOne (mappedBy = "pokemon")
     private EvolutionEntity evolution;
 
 }

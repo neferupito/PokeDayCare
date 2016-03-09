@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository("evolutionGroupDao")
+@Repository ("evolutionGroupDao")
 public class EvolutionGroupDao extends PokeDayCareDao<EvolutionGroupEntity> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EvolutionGroupDao.class);

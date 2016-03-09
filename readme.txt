@@ -1,1 +1,5 @@
-[ ] Change EggGroup and Type to ENUM
+== To do ==
+
+[ ] Handle languages
+[ ] Handle old games
+[ ] Marker in logging

@@ -27,7 +27,9 @@ public class PokemonService {
     @Path("/{name}")
     @Produces((MediaType.APPLICATION_JSON))
     public String getInfos(
-            @PathParam("name") String name) {
+            @PathParam("name")
+            String name) {
+
         Long startMillis = System.currentTimeMillis();
 
         load();

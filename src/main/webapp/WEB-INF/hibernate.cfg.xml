@@ -7,8 +7,6 @@
 
     <session-factory>
         <mapping class="com.nefee.pokedaycare.data.entity.PokemonEntity"/>
-        <mapping class="com.nefee.pokedaycare.data.entity.TypeEntity"/>
-        <mapping class="com.nefee.pokedaycare.data.entity.EggGroupEntity"/>
         <mapping class="com.nefee.pokedaycare.data.entity.EvolutionEntity"/>
         <mapping class="com.nefee.pokedaycare.data.entity.EvolutionGroupEntity"/>
     </session-factory>

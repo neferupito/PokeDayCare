@@ -12,20 +12,20 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table (name = "evolution_groups")
-@NamedQueries({
-        @NamedQuery(name = "EvolutionGroupEntity.findPokemonByRank", query =
+@NamedQueries ({
+        @NamedQuery (name = "EvolutionGroupEntity.findPokemonByRank", query =
                 "SELECT p FROM PokemonEntity p " +
-                "WHERE p.evolution.evolutionGroup = :evolution_group AND " +
-                "WHERE p.evolution.rank = :rank")
+                        "WHERE p.evolution.evolutionGroup = :evolution_group AND " +
+                        "p.evolution.evolutionRank = :rank")
 })
 public class EvolutionGroupEntity extends PokeDayCareEntity {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(name = "evolution_group_id", unique = true, nullable = false)
+    @Column (name = "evolution_group_id", unique = true, nullable = false)
     private Long id;
 
-    @OneToMany(mappedBy = "evolutionGroup")
+    @OneToMany (mappedBy = "evolutionGroup")
     private List<EvolutionEntity> evolutions;
 
 }

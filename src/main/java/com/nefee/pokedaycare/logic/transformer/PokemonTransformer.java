@@ -21,8 +21,8 @@ public class PokemonTransformer {
         return Pokemon.builder()
                 .name(entity.getName())
                 .nationalId(entity.getNationalId())
-                .type1(entity.getType1().getName())
-                .type2(entity.getType2() == null ? null : entity.getType2().getName())
+                .type1(entity.getType1().toString())
+                .type2(entity.getType2() == null ? null : entity.getType2().toString())
                 .build();
     }
 

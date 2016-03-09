@@ -16,19 +16,19 @@ public class EvolutionEntity extends PokeDayCareEntity {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(name = "evolution_id", unique = true, nullable = false)
+    @Column (name = "evolution_id", unique = true, nullable = false)
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "pokemon_id")
+    @JoinColumn (name = "pokemon_id")
     private PokemonEntity pokemon;
 
-    @Column(name = "evolution_rank")
+    @Column (name = "evolution_rank")
     @NotNull
     private Integer evolutionRank;
 
     @ManyToOne
-    @JoinColumn(name = "evolution_group_id")
+    @JoinColumn (name = "evolution_group_id")
     private EvolutionGroupEntity evolutionGroup;
 
 }
