@@ -18,10 +18,10 @@ import java.util.List;
                         "WHERE p.name = :pokemon_name"),
         @NamedQuery (name = "PokemonEntity.findAll", query =
                 "SELECT p FROM PokemonEntity p")
-//        ,
-//        @NamedQuery (name = "PokemonEntity.findAllPokemonsByEggGroup", query =
-//                "SELECT p FROM PokemonEntity p " +
-//                        "WHERE :egg_group in p.eggGroups")
+        ,
+        @NamedQuery (name = "PokemonEntity.findAllPokemonsByEggGroup", query =
+                "SELECT p FROM PokemonEntity p JOIN p.eggGroups e " +
+                        "WHERE e = :egg_group")
 })
 public class PokemonEntity extends PokeDayCareEntity {
 

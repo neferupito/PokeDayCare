@@ -3,15 +3,10 @@ package com.nefee.pokedaycare.data.dao;
 import com.nefee.pokedaycare.data.entity.EggGroup;
 import com.nefee.pokedaycare.data.entity.PokemonEntity;
 import org.hibernate.HibernateException;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.search.query.dsl.QueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -77,34 +72,10 @@ public class PokemonDao extends PokeDayCareDao<PokemonEntity> {
 
     public List<PokemonEntity> findAllPokemonsByEggGroup(EggGroup eggGroup) {
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("StateCityService");
-        EntityManager entityManager= emf.createEntityManager();
-
-
-        QueryBuilder qb = fullTextEntityManager.getSearchFactory()
-                .buildQueryBuilder().forEntity(Employee.class).get();
-
-
-
-
-
-
-
-
-
-
-
-
-
-        List<PokemonEntity> pokemons = getSessionFactory().getCurrentSession()
-                .createCriteria(PokemonEntity.class, "pokemon")
-                .createAlias("pokemon.eggGroups", "eggGroup")
-                .add(Restrictions.eq("eggGroup", eggGroup))
-                .list();
-
+        List<PokemonEntity> pokemons = getSessionFactory().getCurrentSession().getNamedQuery(QUERY_FINDALLBYEGGGROUP)
+                .setParameter("egg_group", eggGroup).list();
 
         try {
-
 
             if (pokemons.isEmpty()) {
                 LOGGER.debug("Couldn't find any Pokemon for the eggGroup {}", eggGroup);
