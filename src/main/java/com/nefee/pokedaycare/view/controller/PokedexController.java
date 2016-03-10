@@ -2,30 +2,25 @@ package com.nefee.pokedaycare.view.controller;
 
 import com.nefee.pokedaycare.logic.manager.PokemonManager;
 import com.nefee.pokedaycare.logic.model.Pokemon;
-import com.nefee.pokedaycare.view.utils.FacesUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import java.util.Optional;
+import java.util.List;
 
 @Getter
 @Setter
-@ManagedBean(name = "pokemonPageController")
-public class PokemonPageController {
+@ManagedBean(name = "pokedexController")
+public class PokedexController {
 
     @Autowired
     @ManagedProperty(value = "#{pokemonManager}")
     private PokemonManager pokemonManager;
 
-    private Integer nationalId;
-
-    private Pokemon pokemon;
-
+    private List<Pokemon> allPokemons;
 
     public void onView() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
@@ -34,19 +29,20 @@ public class PokemonPageController {
     }
 
     public void init() {
-        loadPokemon();
+        loadPokemons();
     }
 
-    public void loadPokemon() {
-        if (pokemon == null) {
-            Optional<Pokemon> optional = pokemonManager.findByNationalId(nationalId);
-
-            if (optional.isPresent()) {
-                pokemon = optional.get();
-            } else {
-                FacesUtils.addErrorMessage("No Pokemon found");
-            }
+    public void loadPokemons() {
+        if (allPokemons == null || allPokemons.isEmpty()) {
+            allPokemons = pokemonManager.findAll();
         }
+    }
+
+    public List<Pokemon> getAllPokemons() {
+//        if (allPokemons == null || allPokemons.isEmpty()) {
+//            loadPokemons();
+//        }
+        return allPokemons;
     }
 
 }

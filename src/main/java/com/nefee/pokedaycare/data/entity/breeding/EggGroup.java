@@ -1,4 +1,4 @@
-package com.nefee.pokedaycare.data.entity;
+package com.nefee.pokedaycare.data.entity.breeding;
 
 public enum EggGroup {
 

@@ -24,21 +24,21 @@ public class PokemonService {
     private Gson gson;
 
     @GET
-    @Path("/{name}")
+    @Path("/{nationalId}")
     @Produces((MediaType.APPLICATION_JSON))
     public String getInfos(
-            @PathParam("name")
-            String name) {
+            @PathParam("nationalId")
+            Integer nationalId) {
 
         Long startMillis = System.currentTimeMillis();
 
         load();
 
-        Optional<Pokemon> optional = pokemonManager.findByName(name);
+        Optional<Pokemon> optional = pokemonManager.findByNationalId(nationalId);
 
         if (optional.isPresent()) {
             String json = gson.toJson(optional.get());
-            PerfomanceLog.logPerf(startMillis, LOGGER, "find Pokemon named " + name);
+            PerfomanceLog.logPerf(startMillis, LOGGER, "find Pokemon with id " + nationalId);
             return json;
         } else {
             return "No Pokemon found";

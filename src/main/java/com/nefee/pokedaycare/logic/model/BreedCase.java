@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -11,8 +13,6 @@ public class BreedCase {
 
     private Pokemon babyGoal;
 
-    private NormalCase normalCase;
-
-    private DittoCase dittoCase;
+    private List<PotentialPartners> potentialPartners;
 
 }

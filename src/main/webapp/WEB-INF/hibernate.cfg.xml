@@ -7,8 +7,10 @@
 
     <session-factory>
         <mapping class="com.nefee.pokedaycare.data.entity.PokemonEntity"/>
-        <mapping class="com.nefee.pokedaycare.data.entity.EvolutionEntity"/>
-        <mapping class="com.nefee.pokedaycare.data.entity.EvolutionGroupEntity"/>
+        <mapping class="com.nefee.pokedaycare.data.entity.evolution.EvolutionEntity"/>
+        <mapping class="com.nefee.pokedaycare.data.entity.evolution.EvolutionGroupEntity"/>
+        <mapping class="com.nefee.pokedaycare.data.entity.evolution.EvolveConditionEntity"/>
+        <mapping class="com.nefee.pokedaycare.data.entity.ObjectEntity"/>
     </session-factory>
 
 </hibernate-configuration>

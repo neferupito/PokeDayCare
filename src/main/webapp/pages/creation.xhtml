@@ -1,78 +1,78 @@
 <!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"-->
-	<!--xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:p="http://primefaces.org/ui">-->
+<!--xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:p="http://primefaces.org/ui">-->
 
 <!--<ui:composition template="../templates/template.xhtml">-->
 
-	<!--<ui:param name="pageTitle" value="Ajout de Pokémon" />-->
-	<!--<ui:param name="pageTabTitle" value="Ajouter un Pokémon" />-->
+<!--<ui:param name="pageTitle" value="Ajout de Pokémon" />-->
+<!--<ui:param name="pageTabTitle" value="Ajouter un Pokémon" />-->
 
-	<!--<ui:define name="content">-->
-		<!--<h:form>-->
-			<!--<p:outputPanel id="creationForm" styleClass="row">-->
-				<!--<div class="col-md-3">-->
-						<!--<h:outputLabel for="id" value="Id: " />-->
-						<!--<p:inputText id="id" value="#{pokemonCreationController.id}" required="true" size="5" placeholder="id">-->
-							<!--<f:convertNumber integerOnly="true" type="number" for="id" />-->
-						<!--</p:inputText>-->
-						<!--<p:message id="idMsg" for="id" />-->
+<!--<ui:define name="content">-->
+<!--<h:form>-->
+<!--<p:outputPanel id="creationForm" styleClass="row">-->
+<!--<div class="col-md-3">-->
+<!--<h:outputLabel for="id" value="Id: " />-->
+<!--<p:inputText id="id" value="#{pokemonCreationController.id}" required="true" size="5" placeholder="id">-->
+<!--<f:convertNumber integerOnly="true" type="number" for="id" />-->
+<!--</p:inputText>-->
+<!--<p:message id="idMsg" for="id" />-->
 
-						<!--<h:outputLabel for="name" value="Nom: " />-->
-						<!--<p:inputText id="name" value="#{pokemonCreationController.name}" required="true" placeholder="Nom"/>-->
-						<!--<p:message id="nameMsg" for="name" />-->
-				<!--</div>-->
+<!--<h:outputLabel for="name" value="Nom: " />-->
+<!--<p:inputText id="name" value="#{pokemonCreationController.name}" required="true" placeholder="Nom"/>-->
+<!--<p:message id="nameMsg" for="name" />-->
+<!--</div>-->
 
-				<!--<div class="col-md-2">-->
-						<!--<h:outputLabel for="type1" value="Type 1" />-->
-						<!--<p:selectOneListbox id="type1" value="#{pokemonCreationController.type1}" converter="TypeConverter" required="true" var="t1" style="width:70px;">-->
-							<!--<f:selectItems value="#{pokemonCreationController.allTypes}" var="type" itemValue="#{type}" />-->
-							<!--<p:column>-->
-								<!--<p:graphicImage value="#{t1.imgURL}" for="type1" />-->
-							<!--</p:column>-->
-						<!--</p:selectOneListbox>-->
-				<!--</div>-->
+<!--<div class="col-md-2">-->
+<!--<h:outputLabel for="type1" value="Type 1" />-->
+<!--<p:selectOneListbox id="type1" value="#{pokemonCreationController.type1}" converter="TypeConverter" required="true" var="t1" style="width:70px;">-->
+<!--<f:selectItems value="#{pokemonCreationController.allTypes}" var="type" itemValue="#{type}" />-->
+<!--<p:column>-->
+<!--<p:graphicImage value="#{t1.imgURL}" for="type1" />-->
+<!--</p:column>-->
+<!--</p:selectOneListbox>-->
+<!--</div>-->
 
-				<!--<div class="col-md-2">-->
-						<!--<h:outputLabel for="type2" value="Ajouter un second type?" />-->
-						<!--<p:selectBooleanCheckbox value="#{pokemonCreationController.haveSecondType}" >-->
-            				<!--<p:ajax event="change" update="type2" />-->
-        				<!--</p:selectBooleanCheckbox>-->
-						<!--<p:selectOneListbox id="type2" value="#{pokemonCreationController.type2}" converter="TypeConverter" var="t2" style="width:70px;" disabled="#{pokemonCreationController.haveSecondType? 'false' : 'true'}">-->
-							<!--<f:selectItems value="#{pokemonCreationController.allTypes}" var="type" itemValue="#{type}" />-->
-							<!--<p:column>-->
-								<!--<p:graphicImage value="#{t2.imgURL}" for="type2" />-->
-							<!--</p:column>-->
-						<!--</p:selectOneListbox>-->
-				<!--</div>-->
-			<!--</p:outputPanel>-->
+<!--<div class="col-md-2">-->
+<!--<h:outputLabel for="type2" value="Ajouter un second type?" />-->
+<!--<p:selectBooleanCheckbox value="#{pokemonCreationController.haveSecondType}" >-->
+<!--<p:ajax event="change" update="type2" />-->
+<!--</p:selectBooleanCheckbox>-->
+<!--<p:selectOneListbox id="type2" value="#{pokemonCreationController.type2}" converter="TypeConverter" var="t2" style="width:70px;" disabled="#{pokemonCreationController.haveSecondType? 'false' : 'true'}">-->
+<!--<f:selectItems value="#{pokemonCreationController.allTypes}" var="type" itemValue="#{type}" />-->
+<!--<p:column>-->
+<!--<p:graphicImage value="#{t2.imgURL}" for="type2" />-->
+<!--</p:column>-->
+<!--</p:selectOneListbox>-->
+<!--</div>-->
+<!--</p:outputPanel>-->
 <!--<div class="clear"></div>-->
-			<!--<div style="text-align: right; margin-top: 20px;">-->
-				<!--<p:commandButton id="add" value="Ajouter" actionListener="#{pokemonCreationController.createNewPokemon}"-->
-					<!--update="creationForm pokemonCreated :growlMessages" icon="ui-icon-plus" styleClass="btn btn-sm btn-default" />-->
-				<!--<p:commandButton id="reset" value="Réinitialiser" actionListener="#{pokemonCreationController.resetInputs}"-->
-					<!--update="creationForm pokemonCreated :growlMessages" icon="ui-icon-arrowrefresh-1-w" styleClass="btn btn-sm btn-default" />-->
-			<!--</div>-->
+<!--<div style="text-align: right; margin-top: 20px;">-->
+<!--<p:commandButton id="add" value="Ajouter" actionListener="#{pokemonCreationController.createNewPokemon}"-->
+<!--update="creationForm pokemonCreated :growlMessages" icon="ui-icon-plus" styleClass="btn btn-sm btn-default" />-->
+<!--<p:commandButton id="reset" value="Réinitialiser" actionListener="#{pokemonCreationController.resetInputs}"-->
+<!--update="creationForm pokemonCreated :growlMessages" icon="ui-icon-arrowrefresh-1-w" styleClass="btn btn-sm btn-default" />-->
+<!--</div>-->
 
-			<!--<p:separator />-->
+<!--<p:separator />-->
 
-			<!--<p:outputPanel id="pokemonCreated">-->
-				<!--<p:outputPanel rendered="#{pokemonCreationController.pokemonCreated ne null}">-->
-				<!--<div class="col-md-2">-->
-				<!--<p:graphicImage value="#{pokemonCreationController.pokemonCreated.imgURL}" />-->
-				<!--</div>-->
-				<!--<div class="col-md-4">-->
-				<!--<p><h:outputText value="Id: "/><strong><h:outputText value="#{pokemonCreationController.pokemonCreated.id}" /></strong></p>-->
-				<!--<p><h:outputText value="Nom: "/><strong><h:outputText value="#{pokemonCreationController.pokemonCreated.name}" /></strong></p>-->
-				<!--<p><h:outputText value="Type(s): "/><p:graphicImage value="#{pokemonCreationController.pokemonCreated.type1.imgURL}" />-->
-							<!--<p:graphicImage value="#{pokemonCreationController.pokemonCreated.type2.imgURL}"-->
-								<!--rendered="#{pokemonCreationController.pokemonCreated.type2 ne null}" /></p>-->
-				<!--</div>-->
-				<!--</p:outputPanel>-->
-				<!--<div class="clear"></div>-->
-			<!---->
-			<!---->
-			<!---->
-			<!---->
-			<!---->
+<!--<p:outputPanel id="pokemonCreated">-->
+<!--<p:outputPanel rendered="#{pokemonCreationController.pokemonCreated ne null}">-->
+<!--<div class="col-md-2">-->
+<!--<p:graphicImage value="#{pokemonCreationController.pokemonCreated.imgURL}" />-->
+<!--</div>-->
+<!--<div class="col-md-4">-->
+<!--<p><h:outputText value="Id: "/><strong><h:outputText value="#{pokemonCreationController.pokemonCreated.id}" /></strong></p>-->
+<!--<p><h:outputText value="Nom: "/><strong><h:outputText value="#{pokemonCreationController.pokemonCreated.name}" /></strong></p>-->
+<!--<p><h:outputText value="Type(s): "/><p:graphicImage value="#{pokemonCreationController.pokemonCreated.type1.imgURL}" />-->
+<!--<p:graphicImage value="#{pokemonCreationController.pokemonCreated.type2.imgURL}"-->
+<!--rendered="#{pokemonCreationController.pokemonCreated.type2 ne null}" /></p>-->
+<!--</div>-->
+<!--</p:outputPanel>-->
+<!--<div class="clear"></div>-->
+<!---->
+<!---->
+<!---->
+<!---->
+<!---->
 <!--&lt;!&ndash; 				<p:panelGrid columns="2" rendered="#{pokemonCreationController.pokemonCreated ne null}"> &ndash;&gt;-->
 <!--&lt;!&ndash; 					<f:facet name="header"> &ndash;&gt;-->
 <!--&lt;!&ndash; 						<p:graphicImage value="#{pokemonCreationController.pokemonCreated.imgURL}" /> &ndash;&gt;-->
@@ -97,8 +97,8 @@
 <!--&lt;!&ndash; 					</p:row> &ndash;&gt;-->
 
 <!--&lt;!&ndash; 				</p:panelGrid> &ndash;&gt;-->
-			<!--</p:outputPanel>-->
-		<!--</h:form>-->
-	<!--</ui:define>-->
+<!--</p:outputPanel>-->
+<!--</h:form>-->
+<!--</ui:define>-->
 <!--</ui:composition>-->
 <!--</html>-->

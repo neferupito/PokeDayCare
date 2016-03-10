@@ -9,7 +9,9 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class DittoCase {
+public class PotentialPartners {
+
+    private PokemonParent partner;
 
     private List<PokemonParent> potentialPartners;
 

@@ -16,8 +16,8 @@
             <p><h:outputText value="Name: "/><strong><h:outputText
                     value="#{pokemonPageController.pokemon.name}"/></strong></p>
             <p><h:outputText value="Type(s): "/><h:outputText value="#{pokemonPageController.pokemon.type1}"/>
-                <h:outputText value="/#{pokemonPageController.pokemon.type2}"/>
-                rendered="#{pokemonPageController.pokemon.type2 ne null}" /></p>
+                <h:outputText value="/#{pokemonPageController.pokemon.type2}"
+                              rendered="#{pokemonPageController.pokemon.type2 ne null}"/></p>
         </p:outputPanel>
     </ui:define>
 </ui:composition>

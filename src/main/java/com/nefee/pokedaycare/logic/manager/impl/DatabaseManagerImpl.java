@@ -1,9 +1,17 @@
 package com.nefee.pokedaycare.logic.manager.impl;
 
-import com.nefee.pokedaycare.data.dao.EvolutionDao;
 import com.nefee.pokedaycare.data.dao.EvolutionGroupDao;
+import com.nefee.pokedaycare.data.dao.EvolutionDao;
+import com.nefee.pokedaycare.data.dao.ObjectDao;
 import com.nefee.pokedaycare.data.dao.PokemonDao;
-import com.nefee.pokedaycare.data.entity.*;
+import com.nefee.pokedaycare.data.entity.ObjectEntity;
+import com.nefee.pokedaycare.data.entity.PokemonEntity;
+import com.nefee.pokedaycare.data.entity.Type;
+import com.nefee.pokedaycare.data.entity.breeding.EggGroup;
+import com.nefee.pokedaycare.data.entity.evolution.EvolutionContext;
+import com.nefee.pokedaycare.data.entity.evolution.EvolutionGroupEntity;
+import com.nefee.pokedaycare.data.entity.evolution.EvolutionEntity;
+import com.nefee.pokedaycare.data.entity.evolution.EvolveConditionEntity;
 import com.nefee.pokedaycare.logic.manager.DatabaseManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,8 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.Optional;
 
-@Service ("databaseManager")
-@Transactional (readOnly = true)
+@Service("databaseManager")
+@Transactional(readOnly = true)
 public class DatabaseManagerImpl implements DatabaseManager {
 
     @Autowired
@@ -22,6 +30,8 @@ public class DatabaseManagerImpl implements DatabaseManager {
     private EvolutionDao evolutionDao;
     @Autowired
     private EvolutionGroupDao evolutionGroupDao;
+    @Autowired
+    private ObjectDao objectDao;
 
     @Transactional
     public String createDB() {
@@ -29,20 +39,59 @@ public class DatabaseManagerImpl implements DatabaseManager {
         Optional<PokemonEntity> optional = pokemonDao.findByName("Bulbasaur");
 
         if (!optional.isPresent()) {
+            // ========== OBJECTS ==========
+
+            ObjectEntity thunderstone = ObjectEntity.builder()
+                    .name("Thunder Stone")
+                    .build();
+            objectDao.create(thunderstone);
+
+            ObjectEntity moonstone = ObjectEntity.builder()
+                    .name("Moon Stone")
+                    .build();
+            objectDao.create(moonstone);
+
+            ObjectEntity firestone = ObjectEntity.builder()
+                    .name("Fire Stone")
+                    .build();
+            objectDao.create(firestone);
+
+            ObjectEntity leafstone = ObjectEntity.builder()
+                    .name("Leaf Stone")
+                    .build();
+            objectDao.create(leafstone);
+
+            ObjectEntity sunstone = ObjectEntity.builder()
+                    .name("Sun Stone")
+                    .build();
+            objectDao.create(sunstone);
+
+            ObjectEntity waterstone = ObjectEntity.builder()
+                    .name("Water Stone")
+                    .build();
+            objectDao.create(waterstone);
+
+            ObjectEntity ovalstone = ObjectEntity.builder()
+                    .name("Oval Stone")
+                    .build();
+            objectDao.create(ovalstone);
+
+            ObjectEntity shinystone = ObjectEntity.builder()
+                    .name("Shiny Stone")
+                    .build();
+            objectDao.create(shinystone);
+
+            ObjectEntity duskstone = ObjectEntity.builder()
+                    .name("Dusk Stone")
+                    .build();
+            objectDao.create(duskstone);
+
+            ObjectEntity dawnstone = ObjectEntity.builder()
+                    .name("Dawn Stone")
+                    .build();
+            objectDao.create(dawnstone);
 
             // ========== POKEMONS + EVOLUTIONS ==========
-
-            PokemonEntity ditto = PokemonEntity.builder()
-                    .nationalId(132)
-                    .name("Ditto")
-                    .type1(Type.NORMAL)
-                    .type2(null)
-                    .percentMale(null)
-                    .percentFemale(null)
-                    .eggGroups(Arrays.asList(EggGroup.DITTO))
-                    .eggCycles(21)
-                    .build();
-            pokemonDao.create(ditto);
 
             EvolutionGroupEntity bulbasaurEvolution = EvolutionGroupEntity.builder().build();
             evolutionGroupDao.create(bulbasaurEvolution);
@@ -56,14 +105,10 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(12.5)
                     .eggGroups(Arrays.asList(EggGroup.GRASS, EggGroup.MONSTER))
                     .eggCycles(21)
+                    .evolutionGroup(bulbasaurEvolution)
                     .build();
             pokemonDao.create(bulbasaur);
-            evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(bulbasaur)
-                    .evolutionRank(1)
-                    .evolutionGroup(bulbasaurEvolution)
-                    .build());
-
+            
             PokemonEntity ivysaur = PokemonEntity.builder()
                     .nationalId(2)
                     .name("Ivysaur")
@@ -73,12 +118,17 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(12.5)
                     .eggGroups(Arrays.asList(EggGroup.GRASS, EggGroup.MONSTER))
                     .eggCycles(21)
+                    .evolutionGroup(bulbasaurEvolution)
                     .build();
             pokemonDao.create(ivysaur);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(ivysaur)
-                    .evolutionRank(2)
-                    .evolutionGroup(bulbasaurEvolution)
+                    .previousPokemon(bulbasaur)
+                    .nextPokemon(ivysaur)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(16)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
                     .build());
 
             PokemonEntity venusaur = PokemonEntity.builder()
@@ -90,12 +140,17 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(12.5)
                     .eggGroups(Arrays.asList(EggGroup.GRASS, EggGroup.MONSTER))
                     .eggCycles(21)
+                    .evolutionGroup(bulbasaurEvolution)
                     .build();
             pokemonDao.create(venusaur);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(venusaur)
-                    .evolutionRank(3)
-                    .evolutionGroup(bulbasaurEvolution)
+                    .previousPokemon(ivysaur)
+                    .nextPokemon(venusaur)
+                    .evolutionRank(2)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(32)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
                     .build());
 
 //        -----
@@ -112,13 +167,9 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(12.5)
                     .eggGroups(Arrays.asList(EggGroup.DRAGON, EggGroup.MONSTER))
                     .eggCycles(21)
+                    .evolutionGroup(charmanderEvolution)
                     .build();
             pokemonDao.create(charmander);
-            evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(charmander)
-                    .evolutionRank(1)
-                    .evolutionGroup(charmanderEvolution)
-                    .build());
 
             PokemonEntity charmeleon = PokemonEntity.builder()
                     .nationalId(5)
@@ -129,12 +180,17 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(12.5)
                     .eggGroups(Arrays.asList(EggGroup.DRAGON, EggGroup.MONSTER))
                     .eggCycles(21)
+                    .evolutionGroup(charmanderEvolution)
                     .build();
             pokemonDao.create(charmeleon);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(charmeleon)
-                    .evolutionRank(2)
-                    .evolutionGroup(charmanderEvolution)
+                    .previousPokemon(charmander)
+                    .nextPokemon(charmeleon)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(16)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
                     .build());
 
             PokemonEntity charizard = PokemonEntity.builder()
@@ -146,12 +202,17 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(12.5)
                     .eggGroups(Arrays.asList(EggGroup.DRAGON, EggGroup.MONSTER))
                     .eggCycles(21)
+                    .evolutionGroup(charmanderEvolution)
                     .build();
             pokemonDao.create(charizard);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(charizard)
-                    .evolutionRank(3)
-                    .evolutionGroup(charmanderEvolution)
+                    .previousPokemon(charmeleon)
+                    .nextPokemon(charizard)
+                    .evolutionRank(2)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(36)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
                     .build());
 
 //      -----
@@ -168,13 +229,9 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(12.5)
                     .eggGroups(Arrays.asList(EggGroup.MONSTER, EggGroup.WATER1))
                     .eggCycles(21)
+                    .evolutionGroup(squirtleEvolution)
                     .build();
             pokemonDao.create(squirtle);
-            evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(squirtle)
-                    .evolutionRank(1)
-                    .evolutionGroup(squirtleEvolution)
-                    .build());
 
             PokemonEntity wartortle = PokemonEntity.builder()
                     .nationalId(8)
@@ -185,12 +242,17 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(12.5)
                     .eggGroups(Arrays.asList(EggGroup.MONSTER, EggGroup.WATER1))
                     .eggCycles(21)
+                    .evolutionGroup(squirtleEvolution)
                     .build();
             pokemonDao.create(wartortle);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(wartortle)
-                    .evolutionRank(2)
-                    .evolutionGroup(squirtleEvolution)
+                    .previousPokemon(squirtle)
+                    .nextPokemon(wartortle)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(16)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
                     .build());
 
             PokemonEntity blastoise = PokemonEntity.builder()
@@ -202,12 +264,17 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(12.5)
                     .eggGroups(Arrays.asList(EggGroup.MONSTER, EggGroup.WATER1))
                     .eggCycles(21)
+                    .evolutionGroup(squirtleEvolution)
                     .build();
             pokemonDao.create(blastoise);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(blastoise)
-                    .evolutionRank(3)
-                    .evolutionGroup(squirtleEvolution)
+                    .previousPokemon(wartortle)
+                    .nextPokemon(blastoise)
+                    .evolutionRank(2)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(36)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
                     .build());
 
 //        -----
@@ -224,13 +291,9 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(50d)
                     .eggGroups(Arrays.asList(EggGroup.BUG))
                     .eggCycles(16)
+                    .evolutionGroup(caterpieEvolution)
                     .build();
             pokemonDao.create(caterpie);
-            evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(caterpie)
-                    .evolutionRank(1)
-                    .evolutionGroup(caterpieEvolution)
-                    .build());
 
             PokemonEntity metapod = PokemonEntity.builder()
                     .nationalId(11)
@@ -241,12 +304,17 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(50d)
                     .eggGroups(Arrays.asList(EggGroup.BUG))
                     .eggCycles(16)
+                    .evolutionGroup(caterpieEvolution)
                     .build();
             pokemonDao.create(metapod);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(metapod)
-                    .evolutionRank(2)
-                    .evolutionGroup(caterpieEvolution)
+                    .previousPokemon(caterpie)
+                    .nextPokemon(metapod)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(7)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
                     .build());
 
             PokemonEntity butterfree = PokemonEntity.builder()
@@ -258,12 +326,17 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(50d)
                     .eggGroups(Arrays.asList(EggGroup.BUG))
                     .eggCycles(16)
+                    .evolutionGroup(caterpieEvolution)
                     .build();
             pokemonDao.create(butterfree);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(butterfree)
-                    .evolutionRank(3)
-                    .evolutionGroup(caterpieEvolution)
+                    .previousPokemon(metapod)
+                    .nextPokemon(butterfree)
+                    .evolutionRank(2)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(10)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
                     .build());
 
 //        -----
@@ -280,13 +353,9 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(50d)
                     .eggGroups(Arrays.asList(EggGroup.BUG))
                     .eggCycles(16)
+                    .evolutionGroup(weedleEvolution)
                     .build();
             pokemonDao.create(weedle);
-            evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(weedle)
-                    .evolutionRank(1)
-                    .evolutionGroup(weedleEvolution)
-                    .build());
 
             PokemonEntity kakuna = PokemonEntity.builder()
                     .nationalId(14)
@@ -297,12 +366,17 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(50d)
                     .eggGroups(Arrays.asList(EggGroup.BUG))
                     .eggCycles(16)
+                    .evolutionGroup(weedleEvolution)
                     .build();
             pokemonDao.create(kakuna);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(kakuna)
-                    .evolutionRank(2)
-                    .evolutionGroup(weedleEvolution)
+                    .previousPokemon(weedle)
+                    .nextPokemon(kakuna)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(7)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
                     .build());
 
             PokemonEntity beedrill = PokemonEntity.builder()
@@ -314,12 +388,17 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(50d)
                     .eggGroups(Arrays.asList(EggGroup.BUG))
                     .eggCycles(16)
+                    .evolutionGroup(weedleEvolution)
                     .build();
             pokemonDao.create(beedrill);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(beedrill)
-                    .evolutionRank(3)
-                    .evolutionGroup(weedleEvolution)
+                    .previousPokemon(kakuna)
+                    .nextPokemon(beedrill)
+                    .evolutionRank(2)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(10)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
                     .build());
 
 //        -----
@@ -336,13 +415,9 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(50d)
                     .eggGroups(Arrays.asList(EggGroup.FLYING))
                     .eggCycles(16)
+                    .evolutionGroup(pidgeyEvolution)
                     .build();
             pokemonDao.create(pidgey);
-            evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(pidgey)
-                    .evolutionRank(1)
-                    .evolutionGroup(pidgeyEvolution)
-                    .build());
 
             PokemonEntity pidgeotto = PokemonEntity.builder()
                     .nationalId(17)
@@ -353,12 +428,17 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(50d)
                     .eggGroups(Arrays.asList(EggGroup.FLYING))
                     .eggCycles(16)
+                    .evolutionGroup(pidgeyEvolution)
                     .build();
             pokemonDao.create(pidgeotto);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(pidgeotto)
-                    .evolutionRank(2)
-                    .evolutionGroup(pidgeyEvolution)
+                    .previousPokemon(pidgey)
+                    .nextPokemon(pidgeotto)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(18)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
                     .build());
 
             PokemonEntity pidgeot = PokemonEntity.builder()
@@ -370,12 +450,17 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(50d)
                     .eggGroups(Arrays.asList(EggGroup.FLYING))
                     .eggCycles(16)
+                    .evolutionGroup(pidgeyEvolution)
                     .build();
             pokemonDao.create(pidgeot);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(pidgeot)
-                    .evolutionRank(3)
-                    .evolutionGroup(pidgeyEvolution)
+                    .previousPokemon(pidgeotto)
+                    .nextPokemon(pidgeot)
+                    .evolutionRank(2)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(36)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
                     .build());
 
 //        -----
@@ -392,13 +477,9 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(50d)
                     .eggGroups(Arrays.asList(EggGroup.FIELD))
                     .eggCycles(16)
+                    .evolutionGroup(rattataEvolution)
                     .build();
             pokemonDao.create(rattata);
-            evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(rattata)
-                    .evolutionRank(1)
-                    .evolutionGroup(rattataEvolution)
-                    .build());
 
             PokemonEntity raticate = PokemonEntity.builder()
                     .nationalId(20)
@@ -409,12 +490,17 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(50d)
                     .eggGroups(Arrays.asList(EggGroup.FIELD))
                     .eggCycles(16)
+                    .evolutionGroup(rattataEvolution)
                     .build();
             pokemonDao.create(raticate);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(raticate)
-                    .evolutionRank(2)
-                    .evolutionGroup(rattataEvolution)
+                    .previousPokemon(rattata)
+                    .nextPokemon(raticate)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(20)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
                     .build());
 
 //        -----
@@ -431,13 +517,9 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(50d)
                     .eggGroups(Arrays.asList(EggGroup.FLYING))
                     .eggCycles(16)
+                    .evolutionGroup(spearowEvolution)
                     .build();
             pokemonDao.create(spearow);
-            evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(spearow)
-                    .evolutionRank(1)
-                    .evolutionGroup(spearowEvolution)
-                    .build());
 
             PokemonEntity fearow = PokemonEntity.builder()
                     .nationalId(22)
@@ -448,12 +530,17 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(50d)
                     .eggGroups(Arrays.asList(EggGroup.FLYING))
                     .eggCycles(16)
+                    .evolutionGroup(spearowEvolution)
                     .build();
             pokemonDao.create(fearow);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(fearow)
-                    .evolutionRank(2)
-                    .evolutionGroup(spearowEvolution)
+                    .previousPokemon(spearow)
+                    .nextPokemon(fearow)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(20)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
                     .build());
 
 //        -----
@@ -470,13 +557,9 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(50d)
                     .eggGroups(Arrays.asList(EggGroup.DRAGON, EggGroup.FIELD))
                     .eggCycles(21)
+                    .evolutionGroup(ekansEvolution)
                     .build();
             pokemonDao.create(ekans);
-            evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(ekans)
-                    .evolutionRank(1)
-                    .evolutionGroup(ekansEvolution)
-                    .build());
 
             PokemonEntity arbok = PokemonEntity.builder()
                     .nationalId(24)
@@ -487,18 +570,36 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(50d)
                     .eggGroups(Arrays.asList(EggGroup.DRAGON, EggGroup.FIELD))
                     .eggCycles(21)
+                    .evolutionGroup(ekansEvolution)
                     .build();
             pokemonDao.create(arbok);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(arbok)
-                    .evolutionRank(2)
-                    .evolutionGroup(ekansEvolution)
+                    .previousPokemon(ekans)
+                    .nextPokemon(arbok)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(22)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
                     .build());
 
 //        -----
 
             EvolutionGroupEntity pikaEvolution = EvolutionGroupEntity.builder().build();
             evolutionGroupDao.create(pikaEvolution);
+
+            PokemonEntity pichu = PokemonEntity.builder()
+                    .nationalId(172)
+                    .name("Pichu")
+                    .type1(Type.ELECTRIC)
+                    .type2(null)
+                    .percentMale(50d)
+                    .percentFemale(50d)
+                    .eggGroups(Arrays.asList(EggGroup.UNDISCOVERED))
+                    .eggCycles(11)
+                    .evolutionGroup(pikaEvolution)
+                    .build();
+            pokemonDao.create(pichu);
 
             PokemonEntity pika = PokemonEntity.builder()
                     .nationalId(25)
@@ -509,12 +610,16 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(50d)
                     .eggGroups(Arrays.asList(EggGroup.FAIRY, EggGroup.FIELD))
                     .eggCycles(11)
+                    .evolutionGroup(pikaEvolution)
                     .build();
             pokemonDao.create(pika);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(pika)
-                    .evolutionRank(2)
-                    .evolutionGroup(pikaEvolution)
+                    .previousPokemon(pichu)
+                    .nextPokemon(pika)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .evolutionContext(EvolutionContext.HAPPINESS)
+                            .build()))
                     .build());
 
             PokemonEntity raichu = PokemonEntity.builder()
@@ -526,12 +631,17 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(50d)
                     .eggGroups(Arrays.asList(EggGroup.FAIRY, EggGroup.FIELD))
                     .eggCycles(11)
+                    .evolutionGroup(pikaEvolution)
                     .build();
             pokemonDao.create(raichu);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(raichu)
-                    .evolutionRank(3)
-                    .evolutionGroup(pikaEvolution)
+                    .previousPokemon(pika)
+                    .nextPokemon(raichu)
+                    .evolutionRank(2)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .object(thunderstone)
+                            .evolutionContext(EvolutionContext.USE_OBJECT)
+                            .build()))
                     .build());
 
 //        -----
@@ -548,13 +658,9 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(50d)
                     .eggGroups(Arrays.asList(EggGroup.FIELD))
                     .eggCycles(21)
+                    .evolutionGroup(sabeEvolution)
                     .build();
             pokemonDao.create(sandshrew);
-            evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(sandshrew)
-                    .evolutionRank(1)
-                    .evolutionGroup(sabeEvolution)
-                    .build());
 
             PokemonEntity sandslash = PokemonEntity.builder()
                     .nationalId(28)
@@ -565,12 +671,17 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(50d)
                     .eggGroups(Arrays.asList(EggGroup.FIELD))
                     .eggCycles(21)
+                    .evolutionGroup(sabeEvolution)
                     .build();
             pokemonDao.create(sandslash);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(sandslash)
-                    .evolutionRank(2)
-                    .evolutionGroup(sabeEvolution)
+                    .previousPokemon(sandshrew)
+                    .nextPokemon(sandslash)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(22)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
                     .build());
 
 //        -----
@@ -587,13 +698,9 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(100d)
                     .eggGroups(Arrays.asList(EggGroup.FIELD, EggGroup.MONSTER))
                     .eggCycles(21)
+                    .evolutionGroup(nidoFEvolution)
                     .build();
             pokemonDao.create(nidoF);
-            evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(nidoF)
-                    .evolutionRank(1)
-                    .evolutionGroup(nidoFEvolution)
-                    .build());
 
             PokemonEntity nidorina = PokemonEntity.builder()
                     .nationalId(30)
@@ -604,12 +711,17 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(100d)
                     .eggGroups(Arrays.asList(EggGroup.UNDISCOVERED))
                     .eggCycles(21)
+                    .evolutionGroup(nidoFEvolution)
                     .build();
             pokemonDao.create(nidorina);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(nidorina)
-                    .evolutionRank(2)
-                    .evolutionGroup(nidoFEvolution)
+                    .previousPokemon(nidoF)
+                    .nextPokemon(nidorina)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(16)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
                     .build());
 
             PokemonEntity nidoqueen = PokemonEntity.builder()
@@ -621,12 +733,17 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(100d)
                     .eggGroups(Arrays.asList(EggGroup.UNDISCOVERED))
                     .eggCycles(21)
+                    .evolutionGroup(nidoFEvolution)
                     .build();
             pokemonDao.create(nidoqueen);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(nidoqueen)
-                    .evolutionRank(3)
-                    .evolutionGroup(nidoFEvolution)
+                    .previousPokemon(nidorina)
+                    .nextPokemon(nidoqueen)
+                    .evolutionRank(2)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .object(moonstone)
+                            .evolutionContext(EvolutionContext.USE_OBJECT)
+                            .build()))
                     .build());
 
 //        -----
@@ -643,13 +760,9 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(0d)
                     .eggGroups(Arrays.asList(EggGroup.FIELD, EggGroup.MONSTER))
                     .eggCycles(21)
+                    .evolutionGroup(nidoMEvolution)
                     .build();
             pokemonDao.create(nidoM);
-            evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(nidoM)
-                    .evolutionRank(1)
-                    .evolutionGroup(nidoMEvolution)
-                    .build());
 
             PokemonEntity nidorino = PokemonEntity.builder()
                     .nationalId(33)
@@ -660,12 +773,17 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(0d)
                     .eggGroups(Arrays.asList(EggGroup.FIELD, EggGroup.MONSTER))
                     .eggCycles(21)
+                    .evolutionGroup(nidoMEvolution)
                     .build();
             pokemonDao.create(nidorino);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(nidorino)
-                    .evolutionRank(2)
-                    .evolutionGroup(nidoMEvolution)
+                    .previousPokemon(nidoM)
+                    .nextPokemon(nidorino)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(16)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
                     .build());
 
             PokemonEntity nidoking = PokemonEntity.builder()
@@ -677,13 +795,377 @@ public class DatabaseManagerImpl implements DatabaseManager {
                     .percentFemale(0d)
                     .eggGroups(Arrays.asList(EggGroup.FIELD, EggGroup.MONSTER))
                     .eggCycles(21)
+                    .evolutionGroup(nidoMEvolution)
                     .build();
             pokemonDao.create(nidoking);
             evolutionDao.create(EvolutionEntity.builder()
-                    .pokemon(nidoking)
-                    .evolutionRank(3)
-                    .evolutionGroup(nidoMEvolution)
+                    .previousPokemon(nidorino)
+                    .nextPokemon(nidoking)
+                    .evolutionRank(2)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .object(moonstone)
+                            .evolutionContext(EvolutionContext.USE_OBJECT)
+                            .build()))
                     .build());
+
+//        -----
+
+            EvolutionGroupEntity clefMEvolution = EvolutionGroupEntity.builder().build();
+            evolutionGroupDao.create(clefMEvolution);
+
+            PokemonEntity cleffa = PokemonEntity.builder()
+                    .nationalId(173)
+                    .name("Cleffa")
+                    .type1(Type.FAIRY)
+                    .type2(null)
+                    .percentMale(25d)
+                    .percentFemale(75d)
+                    .eggGroups(Arrays.asList(EggGroup.UNDISCOVERED))
+                    .eggCycles(11)
+                    .evolutionGroup(clefMEvolution)
+                    .build();
+            pokemonDao.create(cleffa);
+
+            PokemonEntity clefairy = PokemonEntity.builder()
+                    .nationalId(35)
+                    .name("Clefairy")
+                    .type1(Type.FAIRY)
+                    .type2(null)
+                    .percentMale(25d)
+                    .percentFemale(75d)
+                    .eggGroups(Arrays.asList(EggGroup.FAIRY))
+                    .eggCycles(11)
+                    .evolutionGroup(clefMEvolution)
+                    .build();
+            pokemonDao.create(clefairy);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .previousPokemon(cleffa)
+                    .nextPokemon(clefairy)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .evolutionContext(EvolutionContext.HAPPINESS)
+                            .build()))
+                    .build());
+
+            PokemonEntity clefable = PokemonEntity.builder()
+                    .nationalId(36)
+                    .name("Clefable")
+                    .type1(Type.FAIRY)
+                    .type2(null)
+                    .percentMale(25d)
+                    .percentFemale(75d)
+                    .eggGroups(Arrays.asList(EggGroup.FAIRY))
+                    .eggCycles(11)
+                    .evolutionGroup(clefMEvolution)
+                    .build();
+            pokemonDao.create(clefable);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .previousPokemon(clefairy)
+                    .nextPokemon(clefable)
+                    .evolutionRank(2)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .object(moonstone)
+                            .evolutionContext(EvolutionContext.USE_OBJECT)
+                            .build()))
+                    .build());
+
+//        -----
+
+            EvolutionGroupEntity vulpixMEvolution = EvolutionGroupEntity.builder().build();
+            evolutionGroupDao.create(vulpixMEvolution);
+
+            PokemonEntity vulpix = PokemonEntity.builder()
+                    .nationalId(37)
+                    .name("Vulpix")
+                    .type1(Type.FIRE)
+                    .type2(null)
+                    .percentMale(25d)
+                    .percentFemale(75d)
+                    .eggGroups(Arrays.asList(EggGroup.FIELD))
+                    .eggCycles(21)
+                    .evolutionGroup(vulpixMEvolution)
+                    .build();
+            pokemonDao.create(vulpix);
+
+            PokemonEntity ninetales = PokemonEntity.builder()
+                    .nationalId(38)
+                    .name("Ninetales")
+                    .type1(Type.FIRE)
+                    .type2(null)
+                    .percentMale(25d)
+                    .percentFemale(75d)
+                    .eggGroups(Arrays.asList(EggGroup.FIELD))
+                    .eggCycles(21)
+                    .evolutionGroup(vulpixMEvolution)
+                    .build();
+            pokemonDao.create(ninetales);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .previousPokemon(vulpix)
+                    .nextPokemon(ninetales)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .object(firestone)
+                            .evolutionContext(EvolutionContext.USE_OBJECT)
+                            .build()))
+                    .build());
+
+//        -----
+
+            EvolutionGroupEntity jiggMEvolution = EvolutionGroupEntity.builder().build();
+            evolutionGroupDao.create(jiggMEvolution);
+
+            PokemonEntity igglybuff = PokemonEntity.builder()
+                    .nationalId(174)
+                    .name("Igglybuff")
+                    .type1(Type.NORMAL)
+                    .type2(Type.FAIRY)
+                    .percentMale(25d)
+                    .percentFemale(75d)
+                    .eggGroups(Arrays.asList(EggGroup.UNDISCOVERED))
+                    .eggCycles(11)
+                    .evolutionGroup(jiggMEvolution)
+                    .build();
+            pokemonDao.create(igglybuff);
+
+            PokemonEntity jigglypuff = PokemonEntity.builder()
+                    .nationalId(39)
+                    .name("Jigglypuff")
+                    .type1(Type.NORMAL)
+                    .type2(Type.FAIRY)
+                    .percentMale(25d)
+                    .percentFemale(75d)
+                    .eggGroups(Arrays.asList(EggGroup.FAIRY))
+                    .eggCycles(11)
+                    .evolutionGroup(jiggMEvolution)
+                    .build();
+            pokemonDao.create(jigglypuff);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .previousPokemon(igglybuff)
+                    .nextPokemon(jigglypuff)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .evolutionContext(EvolutionContext.HAPPINESS)
+                            .build()))
+                    .build());
+
+            PokemonEntity wigglytuff = PokemonEntity.builder()
+                    .nationalId(40)
+                    .name("Wigglytuff")
+                    .type1(Type.NORMAL)
+                    .type2(Type.FAIRY)
+                    .percentMale(25d)
+                    .percentFemale(75d)
+                    .eggGroups(Arrays.asList(EggGroup.FAIRY))
+                    .eggCycles(11)
+                    .evolutionGroup(jiggMEvolution)
+                    .build();
+            pokemonDao.create(wigglytuff);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .previousPokemon(jigglypuff)
+                    .nextPokemon(wigglytuff)
+                    .evolutionRank(2)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .object(moonstone)
+                            .evolutionContext(EvolutionContext.USE_OBJECT)
+                            .build()))
+                    .build());
+
+//        -----
+
+            EvolutionGroupEntity batMEvolution = EvolutionGroupEntity.builder().build();
+            evolutionGroupDao.create(batMEvolution);
+
+            PokemonEntity zubat = PokemonEntity.builder()
+                    .nationalId(41)
+                    .name("Zubat")
+                    .type1(Type.POISON)
+                    .type2(Type.FLYING)
+                    .percentMale(50d)
+                    .percentFemale(50d)
+                    .eggGroups(Arrays.asList(EggGroup.FLYING))
+                    .eggCycles(16)
+                    .evolutionGroup(batMEvolution)
+                    .build();
+            pokemonDao.create(zubat);
+
+            PokemonEntity golbat = PokemonEntity.builder()
+                    .nationalId(42)
+                    .name("Golbat")
+                    .type1(Type.POISON)
+                    .type2(Type.FLYING)
+                    .percentMale(50d)
+                    .percentFemale(50d)
+                    .eggGroups(Arrays.asList(EggGroup.FLYING))
+                    .eggCycles(16)
+                    .evolutionGroup(batMEvolution)
+                    .build();
+            pokemonDao.create(golbat);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .previousPokemon(zubat)
+                    .nextPokemon(golbat)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(22)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
+                    .build());
+            PokemonEntity crobat = PokemonEntity.builder()
+                    .nationalId(169)
+                    .name("Crobat")
+                    .type1(Type.POISON)
+                    .type2(Type.FLYING)
+                    .percentMale(50d)
+                    .percentFemale(50d)
+                    .eggGroups(Arrays.asList(EggGroup.FLYING))
+                    .eggCycles(16)
+                    .evolutionGroup(batMEvolution)
+                    .build();
+            pokemonDao.create(crobat);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .previousPokemon(golbat)
+                    .nextPokemon(crobat)
+                    .evolutionRank(2)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .evolutionContext(EvolutionContext.HAPPINESS)
+                            .build()))
+                    .build());
+
+//        -----
+
+            EvolutionGroupEntity oddishEvolution = EvolutionGroupEntity.builder().build();
+            evolutionGroupDao.create(oddishEvolution);
+
+            PokemonEntity oddish = PokemonEntity.builder()
+                    .nationalId(43)
+                    .name("Oddish")
+                    .type1(Type.GRASS)
+                    .type2(Type.POISON)
+                    .percentMale(50d)
+                    .percentFemale(50d)
+                    .eggGroups(Arrays.asList(EggGroup.GRASS))
+                    .eggCycles(21)
+                    .evolutionGroup(oddishEvolution)
+                    .build();
+            pokemonDao.create(oddish);
+
+            PokemonEntity gloom = PokemonEntity.builder()
+                    .nationalId(44)
+                    .name("Gloom")
+                    .type1(Type.GRASS)
+                    .type2(Type.POISON)
+                    .percentMale(50d)
+                    .percentFemale(50d)
+                    .eggGroups(Arrays.asList(EggGroup.GRASS))
+                    .eggCycles(21)
+                    .evolutionGroup(oddishEvolution)
+                    .build();
+            pokemonDao.create(gloom);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .previousPokemon(oddish)
+                    .nextPokemon(gloom)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(21)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
+                    .build());
+
+            PokemonEntity vileplume = PokemonEntity.builder()
+                    .nationalId(45)
+                    .name("Vileplume")
+                    .type1(Type.GRASS)
+                    .type2(Type.POISON)
+                    .percentMale(50d)
+                    .percentFemale(50d)
+                    .eggGroups(Arrays.asList(EggGroup.GRASS))
+                    .eggCycles(21)
+                    .evolutionGroup(oddishEvolution)
+                    .build();
+            pokemonDao.create(vileplume);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .previousPokemon(gloom)
+                    .nextPokemon(vileplume)
+                    .evolutionRank(2)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .object(leafstone)
+                            .evolutionContext(EvolutionContext.USE_OBJECT)
+                            .build()))
+                    .build());
+
+            PokemonEntity bellossom = PokemonEntity.builder()
+                    .nationalId(182)
+                    .name("Bellossom")
+                    .type1(Type.GRASS)
+                    .type2(null)
+                    .percentMale(50d)
+                    .percentFemale(50d)
+                    .eggGroups(Arrays.asList(EggGroup.GRASS))
+                    .eggCycles(21)
+                    .evolutionGroup(oddishEvolution)
+                    .build();
+            pokemonDao.create(bellossom);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .previousPokemon(gloom)
+                    .nextPokemon(bellossom)
+                    .evolutionRank(2)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .object(sunstone)
+                            .evolutionContext(EvolutionContext.USE_OBJECT)
+                            .build()))
+                    .build());
+
+//        -----
+
+            EvolutionGroupEntity parasEvolution = EvolutionGroupEntity.builder().build();
+            evolutionGroupDao.create(parasEvolution);
+
+            PokemonEntity paras = PokemonEntity.builder()
+                    .nationalId(46)
+                    .name("Paras")
+                    .type1(Type.BUG)
+                    .type2(Type.GRASS)
+                    .percentMale(50d)
+                    .percentFemale(50d)
+                    .eggGroups(Arrays.asList(EggGroup.BUG, EggGroup.GRASS))
+                    .eggCycles(21)
+                    .evolutionGroup(parasEvolution)
+                    .build();
+            pokemonDao.create(paras);
+
+            PokemonEntity parasect = PokemonEntity.builder()
+                    .nationalId(47)
+                    .name("Parasect")
+                    .type1(Type.BUG)
+                    .type2(Type.GRASS)
+                    .percentMale(50d)
+                    .percentFemale(50d)
+                    .eggGroups(Arrays.asList(EggGroup.BUG, EggGroup.GRASS))
+                    .eggCycles(21)
+                    .evolutionGroup(parasEvolution)
+                    .build();
+            pokemonDao.create(parasect);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .previousPokemon(paras)
+                    .nextPokemon(parasect)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(24)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
+                    .build());
+
+
+            PokemonEntity ditto = PokemonEntity.builder()
+                    .nationalId(132)
+                    .name("Ditto")
+                    .type1(Type.NORMAL)
+                    .type2(null)
+                    .percentMale(null)
+                    .percentFemale(null)
+                    .eggGroups(Arrays.asList(EggGroup.DITTO))
+                    .eggCycles(21)
+                    .build();
+            pokemonDao.create(ditto);
 
             return "OK";
         } else {

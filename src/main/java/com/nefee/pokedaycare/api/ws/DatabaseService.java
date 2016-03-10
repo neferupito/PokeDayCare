@@ -2,7 +2,7 @@ package com.nefee.pokedaycare.api.ws;
 
 import com.nefee.pokedaycare.config.SpringApplicationContext;
 import com.nefee.pokedaycare.data.dao.PokemonDao;
-import com.nefee.pokedaycare.data.entity.EggGroup;
+import com.nefee.pokedaycare.data.entity.breeding.EggGroup;
 import com.nefee.pokedaycare.data.entity.PokemonEntity;
 import com.nefee.pokedaycare.logging.utils.PerfomanceLog;
 import com.nefee.pokedaycare.logic.manager.DatabaseManager;
@@ -45,7 +45,7 @@ public class DatabaseService {
 
         List<PokemonEntity> result = pokemonDao.findAllPokemonsByEggGroup(EggGroup.FIELD);
         for (PokemonEntity pk : result) {
-            System.out.println("===== * "+pk.getNationalId()+" * "+pk.getName());
+            System.out.println("===== * " + pk.getNationalId() + " * " + pk.getName());
         }
 
 

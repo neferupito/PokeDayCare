@@ -1,20 +1,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="../templates/template.xhtml">
 
-    <ui:param name="pageTitle" value="Homepage" />
+    <ui:param name="pageTitle" value="Homepage"/>
     <ui:param name="pageTabTitle"
-              value="Bienvenue sur Poke Day Care" />
+              value="Bienvenue sur Poke Day Care"/>
 
     <ui:define name="content">
         <h:form>
 
-            Gah.
+            <p:commandButton actionListener="#{homeController.generate}" update="text" value="Generate DB" icon="ui-icon-arrowrefresh-1-w"/>
+
+            <p:outputPanel id="text">
+                <h:outputText rendered="#{homeController.output ne null}" value="#{homeController.output}" />
+            </p:outputPanel>
 
         </h:form>
     </ui:define>
