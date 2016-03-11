@@ -30,6 +30,9 @@ public class GenerationTransformer {
             case 6:
                 result = Generation.GEN6;
                 break;
+            case 7:
+                result = Generation.GEN7;
+                break;
         }
 
         return result;

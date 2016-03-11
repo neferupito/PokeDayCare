@@ -7,6 +7,7 @@ public enum Generation {
     GEN3,
     GEN4,
     GEN5,
-    GEN6;
+    GEN6,
+    GEN7;
 
 }

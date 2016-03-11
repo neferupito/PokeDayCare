@@ -4,13 +4,13 @@
     <property name="default_log_pattern"
               value='%d{"dd/MM/yyyy HH:mm:ss,SSS"} || %-5level || [%thread] || %logger || %msg%n'/>
     <property name="view_log_pattern"
-              value='%d{"dd/MM/yyyy HH:mm:ss,SSS"} || %-5level || VIEW || %marker || [%thread] || %logger || %msg%n'/>
+              value='%d{"dd/MM/yyyy HH:mm:ss,SSS"} || %-5level || VIEW || [%thread] || %logger || %msg%n'/>
     <property name="logic_log_pattern"
-              value='%d{"dd/MM/yyyy HH:mm:ss,SSS"} || %-5level || LOGIC || %marker || [%thread] || %logger || %msg%n'/>
+              value='%d{"dd/MM/yyyy HH:mm:ss,SSS"} || %-5level || LOGIC || [%thread] || %logger || %msg%n'/>
     <property name="data_log_pattern"
-              value='%d{"dd/MM/yyyy HH:mm:ss,SSS"} || %-5level || DATA || %marker || [%thread] || %logger || %msg%n'/>
+              value='%d{"dd/MM/yyyy HH:mm:ss,SSS"} || %-5level || DATA || [%thread] || %logger || %msg%n'/>
     <property name="api_log_pattern"
-              value='%d{"dd/MM/yyyy HH:mm:ss,SSS"} || %-5level || API || %marker || [%thread] || %logger || %msg%n'/>
+              value='%d{"dd/MM/yyyy HH:mm:ss,SSS"} || %-5level || API || [%thread] || %logger || %msg%n'/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

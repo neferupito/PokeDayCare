@@ -182,15 +182,16 @@ public class BreedManagerImpl implements BreedManager {
         if (baby.hasEvolutions()) {
 
             List<GenerationProfileEntity> evolutions = baby.getEvolutionGroup().getPokemons();
+            List<GenerationProfileEntity> moms = new ArrayList<>();
 
             for (GenerationProfileEntity pokemon : evolutions) {
-                if ((pokemon.getPercentFemale() <= 0) || pokemon.getEggGroups().contains(EggGroup.UNDISCOVERED)) {
+                if ((pokemon.getPercentFemale() > 0) && !pokemon.getEggGroups().contains(EggGroup.UNDISCOVERED)) {
                     System.err.println(pokemon.getPokemon().getName() + " added in the potential moms");
-                    evolutions.remove(pokemon);
+                    moms.add(pokemon);
                 }
             }
 
-            return evolutions;
+            return moms;
 
         } else {
             return Arrays.asList(baby);
