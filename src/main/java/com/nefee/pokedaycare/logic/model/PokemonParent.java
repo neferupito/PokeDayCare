@@ -15,6 +15,4 @@ public class PokemonParent {
 
     private Gender gender;
 
-    private String object;
-
 }

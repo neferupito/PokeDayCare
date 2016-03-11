@@ -9,17 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import java.util.Optional;
 
 @Getter
 @Setter
-@ManagedBean(name = "pokemonPageController")
+@ManagedBean (name = "pokemonPageController")
 public class PokemonPageController {
 
     @Autowired
-    @ManagedProperty(value = "#{pokemonManager}")
+    @ManagedProperty (value = "#{pokemonManager}")
     private PokemonManager pokemonManager;
 
     private Integer nationalId;
@@ -39,7 +38,7 @@ public class PokemonPageController {
 
     public void loadPokemon() {
         if (pokemon == null) {
-            Optional<Pokemon> optional = pokemonManager.findByNationalId(nationalId);
+            Optional<Pokemon> optional = pokemonManager.findByNationalIdAndGeneration(nationalId, null);
 
             if (optional.isPresent()) {
                 pokemon = optional.get();

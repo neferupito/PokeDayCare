@@ -7,10 +7,10 @@ import java.util.Optional;
 
 public interface PokemonManager {
 
-    Optional<Pokemon> findByNationalId(Integer id);
+    Optional<Pokemon> findByNationalIdAndGeneration(Integer id, Integer gen);
 
-    Optional<Pokemon> findByName(String name);
+//    Optional<Pokemon> findByName(String name);
 
-    List<Pokemon> findAll();
+    List<Pokemon> findAllByGeneration(Integer gen);
 
 }

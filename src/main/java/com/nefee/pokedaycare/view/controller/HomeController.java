@@ -7,16 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 @Getter
 @Setter
-@ManagedBean(name = "homeController")
+@ManagedBean (name = "homeController")
 public class HomeController {
 
     @Autowired
-    @ManagedProperty(value = "#{databaseManager}")
+    @ManagedProperty (value = "#{databaseManager}")
     private DatabaseManager databaseManager;
 
     private String output;

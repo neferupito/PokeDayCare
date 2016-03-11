@@ -1,11 +1,14 @@
 package com.nefee.pokedaycare.logic.manager.impl;
 
 import com.nefee.pokedaycare.data.dao.EvolutionDao;
+import com.nefee.pokedaycare.data.dao.GenerationProfileDao;
 import com.nefee.pokedaycare.data.dao.PokemonDao;
 import com.nefee.pokedaycare.data.entity.PokemonEntity;
 import com.nefee.pokedaycare.data.entity.breeding.EggGroup;
 import com.nefee.pokedaycare.data.entity.evolution.EvolutionEntity;
 import com.nefee.pokedaycare.data.entity.evolution.EvolutionGroupEntity;
+import com.nefee.pokedaycare.data.entity.generation.Generation;
+import com.nefee.pokedaycare.data.entity.generation.GenerationProfileEntity;
 import com.nefee.pokedaycare.logic.exception.BreedingNotPossibleException;
 import com.nefee.pokedaycare.logic.exception.PokeNotFoundException;
 import com.nefee.pokedaycare.logic.manager.BreedManager;
@@ -24,8 +27,8 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.*;
 
-@Service("breedManager")
-@Transactional(readOnly = true)
+@Service ("breedManager")
+@Transactional (readOnly = true)
 public class BreedManagerImpl implements BreedManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BreedManager.class);
@@ -34,6 +37,8 @@ public class BreedManagerImpl implements BreedManager {
     private PokemonDao pokemonDao;
     @Autowired
     private EvolutionDao evolutionDao;
+    @Autowired
+    private GenerationProfileDao generationProfileDao;
 
     @PostConstruct
     public void init() {
@@ -45,9 +50,13 @@ public class BreedManagerImpl implements BreedManager {
         System.err.println("== BreedManager stopped ==");
     }
 
-    public BreedCase buildBreedCase(Integer nationalId) throws PokeNotFoundException, BreedingNotPossibleException {
+    public BreedCase buildBreedCase(Integer nationalId, Generation generation) throws PokeNotFoundException, BreedingNotPossibleException {
 
-        PokemonEntity baby = findBaby(nationalId);
+        if (generation == null) {
+            generation = Generation.GEN6;
+        }
+
+        GenerationProfileEntity baby = findBaby(generation, nationalId);
 
 //        if (baby.getName().equals("Nidorina") || baby.getName().equals("Nidoqueen")) {
 //            return SpecialCaseProvider.forNidorina();
@@ -59,194 +68,149 @@ public class BreedManagerImpl implements BreedManager {
 //            return SpecialCaseProvider.forTauros();
 //        }
 
+
         if (baby.hasEvolutions()) {
-            System.err.println(baby.getName() + " has evolutions");
+            System.err.println(baby.getPokemon().getName() + " has evolutions");
             // Check if the baby has evolutions and if it's the first in the evolution, if not replaced by the first
             baby = checkIfBabyIsFirstEvolution(baby);
         }
 
+
         // Check if it is a Legendary or exception
-//        if (!checkIfCanBreed(baby)) {
-//            throw new BreedingNotPossibleException("Pokemon " + baby.getName() + "can't breed");
-//        }
+        if (!checkIfCanBeEgg(baby)) {
+            throw new BreedingNotPossibleException("Pokemon " + baby.getPokemon().getName() + "can't breed");
+        }
 
         // Standard case
 
         List<PotentialPartners> potentialPartners = new ArrayList<>();
-        Collection<PokemonParent> moms = findPotentialMoms(baby);
+        List<GenerationProfileEntity> moms = findPotentialMoms(baby);
 
-        for (PokemonParent mom : moms) {
-            List<PokemonParent> dads = findPotentialDads(mom);
+        for (GenerationProfileEntity mom : moms) {
+            List<PokemonParent> dads = findPotentialDads(mom, generation);
             potentialPartners.add(PotentialPartners.builder()
-                    .partner(mom)
+                    .partner(PokemonParent.builder()
+                            .name(mom.getPokemon().getName())
+                            .nationalId(mom.getPokemon().getNationalId())
+                            .gender(Gender.FEMALE)
+                            .build())
                     .potentialPartners(dads)
                     .build());
         }
 
-        PotentialPartners dittoPartners = findDittoPartners(baby);
+        PotentialPartners dittoPartners = findDittoPartners(moms);
         potentialPartners.add(dittoPartners);
 
         return BreedCase.builder()
-                .babyGoal(PokemonTransformer.entityToPokemon(baby))
+                .babyGoal(PokemonTransformer.genProfileToPokemon(baby))
+                .requiredObject(baby.getRequiredObjectForEgg() == null ? null : baby.getRequiredObjectForEgg().getName())
                 .potentialPartners(potentialPartners)
                 .build();
     }
 
-    private PokemonEntity findBaby(Integer id) throws PokeNotFoundException {
-        Optional<PokemonEntity> optional = pokemonDao.findByNationalId(id);
+    private GenerationProfileEntity findBaby(Generation gen, Integer id) throws PokeNotFoundException {
+        Optional<GenerationProfileEntity> optional = generationProfileDao.findByNationalIdAndGeneration(id, gen);
         if (!optional.isPresent()) {
             throw new PokeNotFoundException("Couldn't find any pokemon with id " + id);
         }
         return optional.get();
     }
 
-    private boolean checkIfCanBreed(PokemonEntity baby) {
+    private boolean checkIfCanBeEgg(GenerationProfileEntity baby) {
+        if (!checkIfCanBreed(baby)) {
+            System.err.println(baby.getPokemon().getName() + " can't breed");
+            if (baby.hasEvolutions()) {
+                System.err.println(baby.getPokemon().getName() + " has evolutions who can maybe breed");
+                for (GenerationProfileEntity gp : baby.getEvolutionGroup().getPokemons()) {
+                    if (checkIfCanBreed(gp)) {
+                        System.err.println(gp.getPokemon().getName() + " can breed " + baby.getPokemon().getName());
+                        return true;
+                    }
+                }
+                System.err.println(baby.getPokemon().getName() + " has no evolution who can breed");
+                return false;
+            } else {
+                System.err.println(baby.getPokemon().getName() + " has no evolution so no breeding possible");
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
 
-        // If Ditto or Legendary, false
+    private boolean checkIfCanBreed(GenerationProfileEntity baby) {
+        // If Ditto or Legendary or baby => false
         for (EggGroup eg : baby.getEggGroups()) {
             if (eg.equals(EggGroup.UNDISCOVERED) || eg.equals(EggGroup.DITTO)) {
                 return false;
             }
         }
-
         return true;
 
     }
 
-    private PokemonEntity checkIfBabyIsFirstEvolution(PokemonEntity baby) throws PokeNotFoundException {
+    private GenerationProfileEntity checkIfBabyIsFirstEvolution(GenerationProfileEntity baby) throws PokeNotFoundException {
 
         if (baby.getPreviousEvolution() != null) {
 
-            System.err.println(baby.getName() + " has previous evolution, he's not the first one");
+            System.err.println(baby.getPokemon().getName() + " has previous evolution, he's not the first one");
 
             EvolutionGroupEntity evolutionGroup = baby.getEvolutionGroup();
 
             Optional<EvolutionEntity> optional = evolutionDao.getEvolutionByRank(evolutionGroup, 1);
 
             if (!optional.isPresent()) {
-                throw new PokeNotFoundException("Couldn't find any first evolution for " + baby.getName());
+                throw new PokeNotFoundException("Couldn't find any first evolution for " + baby.getPokemon().getName());
             }
 
-            PokemonEntity previous = optional.get().getPreviousPokemon();
+            GenerationProfileEntity previous = optional.get().getPreviousPokemon();
 
-            System.err.println("First Pokemon of evolution group is " + previous.getName());
+            System.err.println("First Pokemon of evolution group is " + previous.getPokemon().getName());
 
             return previous;
 
         } else {
 
-            System.err.println(baby.getName() + "has no previous evolution");
-            // le bébé n'a pas de première évolution
+            System.err.println(baby.getPokemon().getName() + "has no previous evolution");
             return baby;
+
         }
     }
 
-//    private Set<EggGroup> findEggGroupsForBabyAndEvolutions(PokemonEntity baby) {
-//
-//        Set<EggGroup> eggGroups = new HashSet<EggGroup>();
-//
-//        if (hasEvolutions) {
-//
-//            int i = 1;
-//
-//            for (EvolutionEntity evolution : evolutionGroup.getEvolutions()) {
-//
-//                System.err.println("Evolution n°" + i++ + " is between " + evolution.getPreviousPokemon().getName() + " and " + evolution.getNextPokemon().getName());
-//
-//                // TODO: to improve
-//
-//                for (EggGroup eg : evolution.getPreviousPokemon().getEggGroups()) {
-//
-//                    System.err.println("Fetching eggGroups of " + evolution.getPreviousPokemon().getName());
-//
-//                    if (!eg.equals(EggGroup.UNDISCOVERED)) {
-//                        eggGroups.add(eg);
-//                        System.err.println(eg + " added");
-//                    }
-//                }
-//
-//                System.err.println("Fetching eggGroups of " + evolution.getNextPokemon().getName());
-//
-//                for (EggGroup eg : evolution.getNextPokemon().getEggGroups()) {
-//                    if (!eg.equals(EggGroup.UNDISCOVERED)) {
-//                        eggGroups.add(eg);
-//                        System.err.println(eg + " added");
-//                    }
-//                }
-//            }
-//
-//        } else {
-//
-//            System.err.println(baby.getName() + " has no evolution so fetching only the eggroups for him");
-//
-//            for (EggGroup eg : baby.getEggGroups()) {
-//                eggGroups.add(eg);
-//                System.err.println(eg + " added");
-//            }
-//        }
-//
-//        StringBuffer sb = new StringBuffer();
-//        for (EggGroup eg : eggGroups) {
-//            sb.append(" ");
-//            sb.append(eg);
-//        }
-//
-//        LOGGER.debug("Found following eggGroups for breeding baby {} :{}", baby.getName(), sb.toString());
-//
-//        return eggGroups;
-//    }
-
-    // Return all the evolutions that can breed
-    private List<PokemonParent> findPotentialMoms(PokemonEntity baby) throws PokeNotFoundException {
-
+    private List<GenerationProfileEntity> findPotentialMoms(GenerationProfileEntity baby) throws PokeNotFoundException {
 
         if (baby.hasEvolutions()) {
 
-            List<PokemonParent> result = new ArrayList<>();
-            List<PokemonEntity> evolutions = baby.getEvolutionGroup().getPokemons();
+            List<GenerationProfileEntity> evolutions = baby.getEvolutionGroup().getPokemons();
 
-            for (PokemonEntity pokemon : evolutions) {
-                if (pokemon.getPercentFemale() > 0 && !pokemon.getEggGroups().contains(EggGroup.UNDISCOVERED)) {
-                    result.add(PokemonParent.builder()
-                            .name(pokemon.getName())
-                            .nationalId(pokemon.getNationalId())
-                            .gender(Gender.FEMALE)
-                            .object(null)
-                            .build());
+            for (GenerationProfileEntity pokemon : evolutions) {
+                if ((pokemon.getPercentFemale() <= 0) || pokemon.getEggGroups().contains(EggGroup.UNDISCOVERED)) {
+                    System.err.println(pokemon.getPokemon().getName() + " added in the potential moms");
+                    evolutions.remove(pokemon);
                 }
             }
 
-            return result;
+            return evolutions;
 
         } else {
-            List<PokemonParent> moms = new ArrayList<>();
-            moms.add(PokemonParent.builder()
-                    .name(baby.getName())
-                    .nationalId(baby.getNationalId())
-                    .gender(Gender.FEMALE)
-                    .object(null)
-                    .build());
-            return moms;
+            return Arrays.asList(baby);
         }
 
     }
 
-    private List<PokemonParent> findPotentialDads(PokemonParent mom) throws PokeNotFoundException {
-
-//        Set<EggGroup> eggGroups = findEggGroupsForBabyAndEvolutions(baby);
+    private List<PokemonParent> findPotentialDads(GenerationProfileEntity mom, Generation gen) throws PokeNotFoundException {
 
         List<PokemonParent> resultDads = new ArrayList<>();
-        Set<PokemonEntity> dads = new HashSet<>();
+        Set<GenerationProfileEntity> dads = new HashSet<>();
 
-        PokemonEntity momEntity = pokemonDao.findByNationalId(mom.getNationalId()).get();
-
-        for (EggGroup eg : momEntity.getEggGroups()) {
+        for (EggGroup eg : mom.getEggGroups()) {
             if (eg != EggGroup.UNDISCOVERED) {
-                List<PokemonEntity> pokemons = pokemonDao.findAllPokemonsByEggGroup(eg);
-                if (!pokemons.isEmpty()) {
-                    for (PokemonEntity pkmn : pokemons) {
+                List<GenerationProfileEntity> eggGroupPokemons = generationProfileDao.findAllPokemonsByEggGroupAndGeneration(eg, gen);
+                if (!eggGroupPokemons.isEmpty()) {
+                    for (GenerationProfileEntity pkmn : eggGroupPokemons) {
                         if (checkIfCanBreed(pkmn)) {
                             if (pkmn.getPercentMale() > 0)
+
                                 dads.add(pkmn);
                         }
                     }
@@ -254,36 +218,30 @@ public class BreedManagerImpl implements BreedManager {
             }
         }
 
-        // ADD EVOL
+        // ADD EVOL ???
 
-        for (PokemonEntity pkmn : dads)
+        for (GenerationProfileEntity pkmn : dads)
 
         {
             resultDads.add(PokemonParent.builder()
-                    .name(pkmn.getName())
-                    .nationalId(pkmn.getNationalId())
+                    .name(pkmn.getPokemon().getName())
+                    .nationalId(pkmn.getPokemon().getNationalId())
                     .gender(Gender.MALE)
-                    .object(null)
                     .build());
         }
 
         return resultDads;
     }
 
-    private PotentialPartners findDittoPartners(PokemonEntity baby) {
+    private PotentialPartners findDittoPartners(List<GenerationProfileEntity> moms) {
 
         List<PokemonParent> partners = new ArrayList<>();
-        List<PokemonEntity> pokemons = baby.getEvolutionGroup().getPokemons();
-
-        for (PokemonEntity pokemon : pokemons) {
-            if (!pokemon.getEggGroups().contains(EggGroup.UNDISCOVERED)) {
-                partners.add(PokemonParent.builder()
-                        .name(pokemon.getName())
-                        .nationalId(pokemon.getNationalId())
-                        .gender(Gender.ALL)
-                        .object(null)
-                        .build());
-            }
+        for (GenerationProfileEntity mom : moms) {
+            partners.add(PokemonParent.builder()
+                    .name(mom.getPokemon().getName())
+                    .nationalId(mom.getPokemon().getNationalId())
+                    .gender(Gender.ALL)
+                    .build());
         }
 
         PokemonEntity ditto = pokemonDao.findByNationalId(132).get();
@@ -293,30 +251,9 @@ public class BreedManagerImpl implements BreedManager {
                         .name(ditto.getName())
                         .nationalId(ditto.getNationalId())
                         .gender(Gender.NEUTRAL)
-                        .object(null)
                         .build())
                 .potentialPartners(partners)
                 .build();
     }
-
-//    private Set<PokemonEntity> collectPokemonsFromEvolutionGroup(EvolutionGroupEntity evolutionGroup) {
-//
-//        Set<PokemonEntity> pokemonSet = new HashSet<>();
-//
-//        for (EvolutionEntity evolution : evolutionGroup.getEvolutions()) {
-//            PokemonEntity previousPokemon = evolution.getPreviousPokemon();
-//            if (checkIfCanBreed(previousPokemon)) {
-//                pokemonSet.add(previousPokemon);
-//                System.err.println(previousPokemon.getName() + " added in the potential moms");
-//            }
-//            PokemonEntity nextPokemon = evolution.getNextPokemon();
-//            if (checkIfCanBreed(nextPokemon)) {
-//                pokemonSet.add(nextPokemon);
-//                System.err.println(previousPokemon.getName() + " added in the potential moms");
-//            }
-//        }
-//
-//        return pokemonSet;
-//    }
 
 }

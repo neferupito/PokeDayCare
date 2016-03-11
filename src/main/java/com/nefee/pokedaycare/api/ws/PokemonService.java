@@ -15,7 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.Optional;
 
-@Path("/pokemon")
+@Path ("/pokemon")
 public class PokemonService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PokemonService.class);
@@ -24,17 +24,17 @@ public class PokemonService {
     private Gson gson;
 
     @GET
-    @Path("/{nationalId}")
-    @Produces((MediaType.APPLICATION_JSON))
+    @Path ("/{nationalId}")
+    @Produces ((MediaType.APPLICATION_JSON))
     public String getInfos(
-            @PathParam("nationalId")
+            @PathParam ("nationalId")
             Integer nationalId) {
 
         Long startMillis = System.currentTimeMillis();
 
         load();
 
-        Optional<Pokemon> optional = pokemonManager.findByNationalId(nationalId);
+        Optional<Pokemon> optional = pokemonManager.findByNationalIdAndGeneration(nationalId, null);
 
         if (optional.isPresent()) {
             String json = gson.toJson(optional.get());

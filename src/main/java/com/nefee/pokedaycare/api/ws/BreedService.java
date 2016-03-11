@@ -16,7 +16,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-@Path("/breed")
+@Path ("/breed")
 public class BreedService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BreedService.class);
@@ -25,10 +25,10 @@ public class BreedService {
     private Gson gson;
 
     @GET
-    @Path("/{nationalId}")
-    @Produces((MediaType.TEXT_PLAIN))
+    @Path ("/{nationalId}")
+    @Produces ((MediaType.APPLICATION_JSON))
     public String requestBreedCase(
-            @PathParam("nationalId")
+            @PathParam ("nationalId")
             Integer nationalId) {
 
         Long startMillis = System.currentTimeMillis();
@@ -38,7 +38,7 @@ public class BreedService {
         BreedCase bc;
 
         try {
-            bc = breedManager.buildBreedCase(nationalId);
+            bc = breedManager.buildBreedCase(nationalId, null);
         } catch (PokeNotFoundException e) {
             return "Nothing found";
         } catch (BreedingNotPossibleException e) {

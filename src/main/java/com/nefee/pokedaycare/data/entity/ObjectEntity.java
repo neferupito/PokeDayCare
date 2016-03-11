@@ -10,15 +10,15 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "OBJECTS")
+@Table (name = "OBJECTS")
 public class ObjectEntity extends PokeDayCareEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "OBJ_ID", unique = true, nullable = false)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column (name = "OBJ_ID", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "NAME")
+    @Column (name = "NAME")
     private String name;
 
 }

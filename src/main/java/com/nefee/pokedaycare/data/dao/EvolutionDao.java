@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository("evolutionDao")
+@Repository ("evolutionDao")
 public class EvolutionDao extends PokeDayCareDao<EvolutionEntity> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EvolutionDao.class);
@@ -32,7 +32,7 @@ public class EvolutionDao extends PokeDayCareDao<EvolutionEntity> {
 
             if (queryResult != null) {
                 Optional<EvolutionEntity> optional = Optional.of(queryResult);
-                LOGGER.debug("Found Evolution between {} and {} at rank {}", optional.get().getPreviousPokemon().getName(), optional.get().getNextPokemon().getName(), rank);
+                LOGGER.debug("Found Evolution between {} and {} at rank {}", optional.get().getPreviousPokemon().getPokemon().getName(), optional.get().getNextPokemon().getPokemon().getName(), rank);
                 return optional;
             } else {
                 LOGGER.debug("Couldn't find any Evolution at rank {} for this evolution group", rank);

@@ -15,11 +15,11 @@ import javax.faces.context.FacesContext;
 
 @Getter
 @Setter
-@ManagedBean(name = "breedController")
+@ManagedBean (name = "breedController")
 public class BreedController {
 
     @Autowired
-    @ManagedProperty(value = "#{breedManager}")
+    @ManagedProperty (value = "#{breedManager}")
     private BreedManager breedManager;
 
     private BreedCase breedCase;
@@ -40,14 +40,12 @@ public class BreedController {
 
         if (breedCase == null) {
             try {
-                breedCase = breedManager.buildBreedCase(nationalId);
-            } catch (PokeNotFoundException e) {
-                FacesUtils.addErrorMessage(e.getMessage());
-            } catch (BreedingNotPossibleException e) {
+                breedCase = breedManager.buildBreedCase(nationalId, null);
+            } catch (PokeNotFoundException | BreedingNotPossibleException e) {
                 FacesUtils.addErrorMessage(e.getMessage());
             }
+
         }
 
     }
-
 }

@@ -13,27 +13,31 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "EVOLVE_CONDITIONS")
+@Table (name = "EVOLVE_CONDITIONS")
 public class EvolveConditionEntity extends PokeDayCareEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "EVOL_CONDITION_ID", unique = true, nullable = false)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column (name = "EVOL_CONDITION_ID", unique = true, nullable = false)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "EVOL_CONTEXT", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "EVOL_ID")
+    private EvolutionEntity evolution;
+
+    @Enumerated (EnumType.STRING)
+    @Column (name = "EVOL_CONTEXT", nullable = false)
     private EvolutionContext evolutionContext;
 
-    @Column(name = "LEVEL")
+    @Column (name = "LEVEL")
     private Integer level;
 
     @ManyToOne
-    @JoinColumn(name = "OBJ_ID")
+    @JoinColumn (name = "OBJ_ID")
     private ObjectEntity object;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "MOVE_TYPE")
+    @Enumerated (EnumType.STRING)
+    @Column (name = "MOVE_TYPE")
     private Type moveType;
 
 }

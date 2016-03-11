@@ -13,11 +13,11 @@ import java.util.List;
 
 @Getter
 @Setter
-@ManagedBean(name = "pokedexController")
+@ManagedBean (name = "pokedexController")
 public class PokedexController {
 
     @Autowired
-    @ManagedProperty(value = "#{pokemonManager}")
+    @ManagedProperty (value = "#{pokemonManager}")
     private PokemonManager pokemonManager;
 
     private List<Pokemon> allPokemons;
@@ -34,7 +34,7 @@ public class PokedexController {
 
     public void loadPokemons() {
         if (allPokemons == null || allPokemons.isEmpty()) {
-            allPokemons = pokemonManager.findAll();
+            allPokemons = pokemonManager.findAllByGeneration(null);
         }
     }
 

@@ -13,6 +13,8 @@ public class BreedCase {
 
     private Pokemon babyGoal;
 
+    private String requiredObject;
+
     private List<PotentialPartners> potentialPartners;
 
 }

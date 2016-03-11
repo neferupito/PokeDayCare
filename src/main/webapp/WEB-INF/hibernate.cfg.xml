@@ -11,6 +11,7 @@
         <mapping class="com.nefee.pokedaycare.data.entity.evolution.EvolutionGroupEntity"/>
         <mapping class="com.nefee.pokedaycare.data.entity.evolution.EvolveConditionEntity"/>
         <mapping class="com.nefee.pokedaycare.data.entity.ObjectEntity"/>
+        <mapping class="com.nefee.pokedaycare.data.entity.generation.GenerationProfileEntity"/>
     </session-factory>
 
 </hibernate-configuration>
