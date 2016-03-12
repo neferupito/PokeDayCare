@@ -26,13 +26,14 @@ import java.util.List;
                         "AND p.pokemon.nationalId = :national_id"),
         @NamedQuery (name = "GenerationProfileEntity.findAllByGeneration", query =
                 "SELECT p FROM GenerationProfileEntity p " +
-                        "WHERE generation = :generation"),
+                        "WHERE generation = :generation " +
+                        "ORDER BY p.pokemon.nationalId"),
         @NamedQuery (name = "GenerationProfileEntity.findAllByEggGroup", query =
                 "SELECT p FROM GenerationProfileEntity p JOIN p.eggGroups e " +
                         "WHERE e = :egg_group " +
                         "AND p.generation = :generation")
 })
-public class GenerationProfileEntity extends PokeDayCareEntity {
+public class GenerationProfileEntity extends PokeDayCareEntity implements Comparable<GenerationProfileEntity> {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -88,4 +89,8 @@ public class GenerationProfileEntity extends PokeDayCareEntity {
         return evolutionGroup != null;
     }
 
+    @Override
+    public int compareTo(GenerationProfileEntity o) {
+        return pokemon.getNationalId().compareTo(o.getPokemon().getNationalId());
+    }
 }

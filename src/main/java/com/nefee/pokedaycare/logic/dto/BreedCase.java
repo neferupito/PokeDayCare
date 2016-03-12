@@ -1,4 +1,4 @@
-package com.nefee.pokedaycare.logic.model;
+package com.nefee.pokedaycare.logic.dto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -11,9 +11,9 @@ import java.util.List;
 @Builder
 public class BreedCase {
 
-    private Pokemon babyGoal;
+    private Integer generation;
 
-    private String requiredObject;
+    private List<Baby> babyGoals;
 
     private List<PotentialPartners> potentialPartners;
 

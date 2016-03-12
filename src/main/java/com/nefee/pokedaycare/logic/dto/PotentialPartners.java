@@ -1,4 +1,4 @@
-package com.nefee.pokedaycare.logic.model;
+package com.nefee.pokedaycare.logic.dto;
 
 import lombok.Builder;
 import lombok.Getter;

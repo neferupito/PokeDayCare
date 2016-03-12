@@ -819,329 +819,404 @@ public class DatabaseManagerImpl implements DatabaseManager {
 
 //        -----
 
-//            EvolutionGroupEntity sabeEvolution = EvolutionGroupEntity.builder().build();
-//            evolutionGroupDao.create(sabeEvolution);
-//
-//            PokemonEntity sandshrew = PokemonEntity.builder()
-//                    .nationalId(27)
-//                    .name("Sandshrew")
-//                    .type1(Type.GROUND)
-//                    .type2(null)
-//                    .percentMale(50d)
-//                    .percentFemale(50d)
-//                    .eggGroups(Arrays.asList(EggGroup.FIELD))
-//                    .eggCycles(21)
-//                    .evolutionGroup(sabeEvolution)
-//                    .build();
-//            pokemonDao.create(sandshrew);
-//
-//            PokemonEntity sandslash = PokemonEntity.builder()
-//                    .nationalId(28)
-//                    .name("Sandslash")
-//                    .type1(Type.GROUND)
-//                    .type2(null)
-//                    .percentMale(50d)
-//                    .percentFemale(50d)
-//                    .eggGroups(Arrays.asList(EggGroup.FIELD))
-//                    .eggCycles(21)
-//                    .evolutionGroup(sabeEvolution)
-//                    .build();
-//            pokemonDao.create(sandslash);
-//            evolutionDao.create(EvolutionEntity.builder()
-//                    .previousPokemon(sandshrew)
-//                    .nextPokemon(sandslash)
-//                    .evolutionRank(1)
-//                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
-//                            .level(22)
-//                            .evolutionContext(EvolutionContext.LEVEL)
-//                            .build()))
-//                    .build());
-//
-////        -----
-//
-//            EvolutionGroupEntity nidoFEvolution = EvolutionGroupEntity.builder().build();
-//            evolutionGroupDao.create(nidoFEvolution);
-//
-//            PokemonEntity nidoF = PokemonEntity.builder()
-//                    .nationalId(29)
-//                    .name("NidoranF")
-//                    .type1(Type.POISON)
-//                    .type2(null)
-//                    .percentMale(0d)
-//                    .percentFemale(100d)
-//                    .eggGroups(Arrays.asList(EggGroup.FIELD, EggGroup.MONSTER))
-//                    .eggCycles(21)
-//                    .evolutionGroup(nidoFEvolution)
-//                    .build();
-//            pokemonDao.create(nidoF);
-//
-//            PokemonEntity nidorina = PokemonEntity.builder()
-//                    .nationalId(30)
-//                    .name("Nidorina")
-//                    .type1(Type.POISON)
-//                    .type2(null)
-//                    .percentMale(0d)
-//                    .percentFemale(100d)
-//                    .eggGroups(Arrays.asList(EggGroup.UNDISCOVERED))
-//                    .eggCycles(21)
-//                    .evolutionGroup(nidoFEvolution)
-//                    .build();
-//            pokemonDao.create(nidorina);
-//            evolutionDao.create(EvolutionEntity.builder()
-//                    .previousPokemon(nidoF)
-//                    .nextPokemon(nidorina)
-//                    .evolutionRank(1)
-//                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
-//                            .level(16)
-//                            .evolutionContext(EvolutionContext.LEVEL)
-//                            .build()))
-//                    .build());
-//
-//            PokemonEntity nidoqueen = PokemonEntity.builder()
-//                    .nationalId(31)
-//                    .name("Nidoqueen")
-//                    .type1(Type.POISON)
-//                    .type2(Type.GROUND)
-//                    .percentMale(0d)
-//                    .percentFemale(100d)
-//                    .eggGroups(Arrays.asList(EggGroup.UNDISCOVERED))
-//                    .eggCycles(21)
-//                    .evolutionGroup(nidoFEvolution)
-//                    .build();
-//            pokemonDao.create(nidoqueen);
-//            evolutionDao.create(EvolutionEntity.builder()
-//                    .previousPokemon(nidorina)
-//                    .nextPokemon(nidoqueen)
-//                    .evolutionRank(2)
-//                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
-//                            .object(moonstone)
-//                            .evolutionContext(EvolutionContext.USE_OBJECT)
-//                            .build()))
-//                    .build());
-//
-////        -----
-//
-//            EvolutionGroupEntity nidoMEvolution = EvolutionGroupEntity.builder().build();
-//            evolutionGroupDao.create(nidoMEvolution);
-//
-//            PokemonEntity nidoM = PokemonEntity.builder()
-//                    .nationalId(32)
-//                    .name("NidoranM")
-//                    .type1(Type.POISON)
-//                    .type2(null)
-//                    .percentMale(100d)
-//                    .percentFemale(0d)
-//                    .eggGroups(Arrays.asList(EggGroup.FIELD, EggGroup.MONSTER))
-//                    .eggCycles(21)
-//                    .evolutionGroup(nidoMEvolution)
-//                    .build();
-//            pokemonDao.create(nidoM);
-//
-//            PokemonEntity nidorino = PokemonEntity.builder()
-//                    .nationalId(33)
-//                    .name("Nidorino")
-//                    .type1(Type.POISON)
-//                    .type2(null)
-//                    .percentMale(100d)
-//                    .percentFemale(0d)
-//                    .eggGroups(Arrays.asList(EggGroup.FIELD, EggGroup.MONSTER))
-//                    .eggCycles(21)
-//                    .evolutionGroup(nidoMEvolution)
-//                    .build();
-//            pokemonDao.create(nidorino);
-//            evolutionDao.create(EvolutionEntity.builder()
-//                    .previousPokemon(nidoM)
-//                    .nextPokemon(nidorino)
-//                    .evolutionRank(1)
-//                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
-//                            .level(16)
-//                            .evolutionContext(EvolutionContext.LEVEL)
-//                            .build()))
-//                    .build());
-//
-//            PokemonEntity nidoking = PokemonEntity.builder()
-//                    .nationalId(34)
-//                    .name("Nidoking")
-//                    .type1(Type.POISON)
-//                    .type2(Type.GROUND)
-//                    .percentMale(100d)
-//                    .percentFemale(0d)
-//                    .eggGroups(Arrays.asList(EggGroup.FIELD, EggGroup.MONSTER))
-//                    .eggCycles(21)
-//                    .evolutionGroup(nidoMEvolution)
-//                    .build();
-//            pokemonDao.create(nidoking);
-//            evolutionDao.create(EvolutionEntity.builder()
-//                    .previousPokemon(nidorino)
-//                    .nextPokemon(nidoking)
-//                    .evolutionRank(2)
-//                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
-//                            .object(moonstone)
-//                            .evolutionContext(EvolutionContext.USE_OBJECT)
-//                            .build()))
-//                    .build());
-//
-////        -----
-//
-//            EvolutionGroupEntity clefMEvolution = EvolutionGroupEntity.builder().build();
-//            evolutionGroupDao.create(clefMEvolution);
-//
-//            PokemonEntity cleffa = PokemonEntity.builder()
-//                    .nationalId(173)
-//                    .name("Cleffa")
-//                    .type1(Type.FAIRY)
-//                    .type2(null)
-//                    .percentMale(25d)
-//                    .percentFemale(75d)
-//                    .eggGroups(Arrays.asList(EggGroup.UNDISCOVERED))
-//                    .eggCycles(11)
-//                    .evolutionGroup(clefMEvolution)
-//                    .build();
-//            pokemonDao.create(cleffa);
-//
-//            PokemonEntity clefairy = PokemonEntity.builder()
-//                    .nationalId(35)
-//                    .name("Clefairy")
-//                    .type1(Type.FAIRY)
-//                    .type2(null)
-//                    .percentMale(25d)
-//                    .percentFemale(75d)
-//                    .eggGroups(Arrays.asList(EggGroup.FAIRY))
-//                    .eggCycles(11)
-//                    .evolutionGroup(clefMEvolution)
-//                    .build();
-//            pokemonDao.create(clefairy);
-//            evolutionDao.create(EvolutionEntity.builder()
-//                    .previousPokemon(cleffa)
-//                    .nextPokemon(clefairy)
-//                    .evolutionRank(1)
-//                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
-//                            .evolutionContext(EvolutionContext.HAPPINESS)
-//                            .build()))
-//                    .build());
-//
-//            PokemonEntity clefable = PokemonEntity.builder()
-//                    .nationalId(36)
-//                    .name("Clefable")
-//                    .type1(Type.FAIRY)
-//                    .type2(null)
-//                    .percentMale(25d)
-//                    .percentFemale(75d)
-//                    .eggGroups(Arrays.asList(EggGroup.FAIRY))
-//                    .eggCycles(11)
-//                    .evolutionGroup(clefMEvolution)
-//                    .build();
-//            pokemonDao.create(clefable);
-//            evolutionDao.create(EvolutionEntity.builder()
-//                    .previousPokemon(clefairy)
-//                    .nextPokemon(clefable)
-//                    .evolutionRank(2)
-//                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
-//                            .object(moonstone)
-//                            .evolutionContext(EvolutionContext.USE_OBJECT)
-//                            .build()))
-//                    .build());
-//
-////        -----
-//
-//            EvolutionGroupEntity vulpixMEvolution = EvolutionGroupEntity.builder().build();
-//            evolutionGroupDao.create(vulpixMEvolution);
-//
-//            PokemonEntity vulpix = PokemonEntity.builder()
-//                    .nationalId(37)
-//                    .name("Vulpix")
-//                    .type1(Type.FIRE)
-//                    .type2(null)
-//                    .percentMale(25d)
-//                    .percentFemale(75d)
-//                    .eggGroups(Arrays.asList(EggGroup.FIELD))
-//                    .eggCycles(21)
-//                    .evolutionGroup(vulpixMEvolution)
-//                    .build();
-//            pokemonDao.create(vulpix);
-//
-//            PokemonEntity ninetales = PokemonEntity.builder()
-//                    .nationalId(38)
-//                    .name("Ninetales")
-//                    .type1(Type.FIRE)
-//                    .type2(null)
-//                    .percentMale(25d)
-//                    .percentFemale(75d)
-//                    .eggGroups(Arrays.asList(EggGroup.FIELD))
-//                    .eggCycles(21)
-//                    .evolutionGroup(vulpixMEvolution)
-//                    .build();
-//            pokemonDao.create(ninetales);
-//            evolutionDao.create(EvolutionEntity.builder()
-//                    .previousPokemon(vulpix)
-//                    .nextPokemon(ninetales)
-//                    .evolutionRank(1)
-//                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
-//                            .object(firestone)
-//                            .evolutionContext(EvolutionContext.USE_OBJECT)
-//                            .build()))
-//                    .build());
-//
-////        -----
-//
-//            EvolutionGroupEntity jiggMEvolution = EvolutionGroupEntity.builder().build();
-//            evolutionGroupDao.create(jiggMEvolution);
-//
-//            PokemonEntity igglybuff = PokemonEntity.builder()
-//                    .nationalId(174)
-//                    .name("Igglybuff")
-//                    .type1(Type.NORMAL)
-//                    .type2(Type.FAIRY)
-//                    .percentMale(25d)
-//                    .percentFemale(75d)
-//                    .eggGroups(Arrays.asList(EggGroup.UNDISCOVERED))
-//                    .eggCycles(11)
-//                    .evolutionGroup(jiggMEvolution)
-//                    .build();
-//            pokemonDao.create(igglybuff);
-//
-//            PokemonEntity jigglypuff = PokemonEntity.builder()
-//                    .nationalId(39)
-//                    .name("Jigglypuff")
-//                    .type1(Type.NORMAL)
-//                    .type2(Type.FAIRY)
-//                    .percentMale(25d)
-//                    .percentFemale(75d)
-//                    .eggGroups(Arrays.asList(EggGroup.FAIRY))
-//                    .eggCycles(11)
-//                    .evolutionGroup(jiggMEvolution)
-//                    .build();
-//            pokemonDao.create(jigglypuff);
-//            evolutionDao.create(EvolutionEntity.builder()
-//                    .previousPokemon(igglybuff)
-//                    .nextPokemon(jigglypuff)
-//                    .evolutionRank(1)
-//                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
-//                            .evolutionContext(EvolutionContext.HAPPINESS)
-//                            .build()))
-//                    .build());
-//
-//            PokemonEntity wigglytuff = PokemonEntity.builder()
-//                    .nationalId(40)
-//                    .name("Wigglytuff")
-//                    .type1(Type.NORMAL)
-//                    .type2(Type.FAIRY)
-//                    .percentMale(25d)
-//                    .percentFemale(75d)
-//                    .eggGroups(Arrays.asList(EggGroup.FAIRY))
-//                    .eggCycles(11)
-//                    .evolutionGroup(jiggMEvolution)
-//                    .build();
-//            pokemonDao.create(wigglytuff);
-//            evolutionDao.create(EvolutionEntity.builder()
-//                    .previousPokemon(jigglypuff)
-//                    .nextPokemon(wigglytuff)
-//                    .evolutionRank(2)
-//                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
-//                            .object(moonstone)
-//                            .evolutionContext(EvolutionContext.USE_OBJECT)
-//                            .build()))
-//                    .build());
+            EvolutionGroupEntity sabeEvolution = EvolutionGroupEntity.builder().build();
+
+            PokemonEntity sandshrew = PokemonEntity.builder()
+                    .nationalId(27)
+                    .name("Sandshrew")
+                    .build();
+
+            GenerationProfileEntity sandshrewGEN6 = GenerationProfileEntity.builder()
+                    .generation(Generation.GEN6)
+                    .pokemon(sandshrew)
+                    .type1(Type.GROUND)
+                    .type2(null)
+                    .percentMale(50d)
+                    .percentFemale(50d)
+                    .eggGroups(Arrays.asList(EggGroup.FIELD))
+                    .eggCycles(21)
+                    .evolutionGroup(sabeEvolution)
+                    .build();
+            generationProfileDao.create(sandshrewGEN6);
+
+            PokemonEntity sandslash = PokemonEntity.builder()
+                    .nationalId(28)
+                    .name("Sandslash")
+                    .build();
+
+            GenerationProfileEntity sandslashGEN6 = GenerationProfileEntity.builder()
+                    .generation(Generation.GEN6)
+                    .pokemon(sandslash)
+                    .type1(Type.GROUND)
+                    .type2(null)
+                    .percentMale(50d)
+                    .percentFemale(50d)
+                    .eggGroups(Arrays.asList(EggGroup.FIELD))
+                    .eggCycles(21)
+                    .evolutionGroup(sabeEvolution)
+                    .build();
+            generationProfileDao.create(sandslashGEN6);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .previousPokemon(sandshrewGEN6)
+                    .nextPokemon(sandslashGEN6)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(22)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
+                    .build());
+
+//        -----
+
+            EvolutionGroupEntity nidoFEvolution = EvolutionGroupEntity.builder().build();
+
+            PokemonEntity nidoF = PokemonEntity.builder()
+                    .nationalId(29)
+                    .name("NidoranF")
+                    .build();
+
+            GenerationProfileEntity nidofGEN6 = GenerationProfileEntity.builder()
+                    .generation(Generation.GEN6)
+                    .pokemon(nidoF)
+                    .type1(Type.POISON)
+                    .type2(null)
+                    .percentMale(0d)
+                    .percentFemale(100d)
+                    .eggGroups(Arrays.asList(EggGroup.FIELD, EggGroup.MONSTER))
+                    .eggCycles(21)
+                    .evolutionGroup(nidoFEvolution)
+                    .build();
+            generationProfileDao.create(nidofGEN6);
+
+            PokemonEntity nidorina = PokemonEntity.builder()
+                    .nationalId(30)
+                    .name("Nidorina")
+                    .build();
+
+            GenerationProfileEntity nidorinaGEN6 = GenerationProfileEntity.builder()
+                    .generation(Generation.GEN6)
+                    .pokemon(nidorina)
+                    .type1(Type.POISON)
+                    .type2(null)
+                    .percentMale(0d)
+                    .percentFemale(100d)
+                    .eggGroups(Arrays.asList(EggGroup.UNDISCOVERED))
+                    .eggCycles(21)
+                    .evolutionGroup(nidoFEvolution)
+                    .build();
+            generationProfileDao.create(nidorinaGEN6);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .previousPokemon(nidofGEN6)
+                    .nextPokemon(nidorinaGEN6)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(16)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
+                    .build());
+
+            PokemonEntity nidoqueen = PokemonEntity.builder()
+                    .nationalId(31)
+                    .name("Nidoqueen")
+                    .build();
+
+            GenerationProfileEntity nidoqueenGEN6 = GenerationProfileEntity.builder()
+                    .generation(Generation.GEN6)
+                    .pokemon(nidoqueen)
+                    .type1(Type.POISON)
+                    .type2(Type.GROUND)
+                    .percentMale(0d)
+                    .percentFemale(100d)
+                    .eggGroups(Arrays.asList(EggGroup.UNDISCOVERED))
+                    .eggCycles(21)
+                    .evolutionGroup(nidoFEvolution)
+                    .build();
+            generationProfileDao.create(nidoqueenGEN6);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .previousPokemon(nidorinaGEN6)
+                    .nextPokemon(nidoqueenGEN6)
+                    .evolutionRank(2)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .object(moonstone)
+                            .evolutionContext(EvolutionContext.USE_OBJECT)
+                            .build()))
+                    .build());
+
+//        -----
+
+            EvolutionGroupEntity nidoMEvolution = EvolutionGroupEntity.builder().build();
+
+            PokemonEntity nidoM = PokemonEntity.builder()
+                    .nationalId(32)
+                    .name("NidoranM")
+                    .build();
+
+            GenerationProfileEntity nidomGEN6 = GenerationProfileEntity.builder()
+                    .generation(Generation.GEN6)
+                    .pokemon(nidoM)
+                    .type1(Type.POISON)
+                    .type2(null)
+                    .percentMale(100d)
+                    .percentFemale(0d)
+                    .eggGroups(Arrays.asList(EggGroup.FIELD, EggGroup.MONSTER))
+                    .eggCycles(21)
+                    .evolutionGroup(nidoMEvolution)
+                    .build();
+            generationProfileDao.create(nidomGEN6);
+
+            PokemonEntity nidorino = PokemonEntity.builder()
+                    .nationalId(33)
+                    .name("Nidorino")
+                    .build();
+
+            GenerationProfileEntity nidorinoGEN6 = GenerationProfileEntity.builder()
+                    .generation(Generation.GEN6)
+                    .pokemon(nidorino)
+                    .type1(Type.POISON)
+                    .type2(null)
+                    .percentMale(100d)
+                    .percentFemale(0d)
+                    .eggGroups(Arrays.asList(EggGroup.FIELD, EggGroup.MONSTER))
+                    .eggCycles(21)
+                    .evolutionGroup(nidoMEvolution)
+                    .build();
+            generationProfileDao.create(nidorinoGEN6);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .previousPokemon(nidomGEN6)
+                    .nextPokemon(nidorinoGEN6)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .level(16)
+                            .evolutionContext(EvolutionContext.LEVEL)
+                            .build()))
+                    .build());
+
+            PokemonEntity nidoking = PokemonEntity.builder()
+                    .nationalId(34)
+                    .name("Nidoking")
+                    .build();
+
+            GenerationProfileEntity nidokingGEN6 = GenerationProfileEntity.builder()
+                    .generation(Generation.GEN6)
+                    .pokemon(nidoking)
+                    .type1(Type.POISON)
+                    .type2(Type.GROUND)
+                    .percentMale(100d)
+                    .percentFemale(0d)
+                    .eggGroups(Arrays.asList(EggGroup.FIELD, EggGroup.MONSTER))
+                    .eggCycles(21)
+                    .evolutionGroup(nidoMEvolution)
+                    .build();
+            generationProfileDao.create(nidokingGEN6);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .previousPokemon(nidorinoGEN6)
+                    .nextPokemon(nidokingGEN6)
+                    .evolutionRank(2)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .object(moonstone)
+                            .evolutionContext(EvolutionContext.USE_OBJECT)
+                            .build()))
+                    .build());
+
+//        -----
+
+            EvolutionGroupEntity clefMEvolution = EvolutionGroupEntity.builder().build();
+
+            PokemonEntity cleffa = PokemonEntity.builder()
+                    .nationalId(173)
+                    .name("Cleffa")
+                    .build();
+
+            GenerationProfileEntity cleffaGEN6 = GenerationProfileEntity.builder()
+                    .generation(Generation.GEN6)
+                    .pokemon(cleffa)
+                    .type1(Type.FAIRY)
+                    .type2(null)
+                    .percentMale(25d)
+                    .percentFemale(75d)
+                    .eggGroups(Arrays.asList(EggGroup.UNDISCOVERED))
+                    .eggCycles(11)
+                    .evolutionGroup(clefMEvolution)
+                    .build();
+            generationProfileDao.create(cleffaGEN6);
+
+            PokemonEntity clefairy = PokemonEntity.builder()
+                    .nationalId(35)
+                    .name("Clefairy")
+                    .build();
+
+            GenerationProfileEntity clefairyGEN6 = GenerationProfileEntity.builder()
+                    .generation(Generation.GEN6)
+                    .pokemon(clefairy)
+                    .type1(Type.FAIRY)
+                    .type2(null)
+                    .percentMale(25d)
+                    .percentFemale(75d)
+                    .eggGroups(Arrays.asList(EggGroup.FAIRY))
+                    .eggCycles(11)
+                    .evolutionGroup(clefMEvolution)
+                    .build();
+            generationProfileDao.create(clefairyGEN6);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .previousPokemon(cleffaGEN6)
+                    .nextPokemon(clefairyGEN6)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .evolutionContext(EvolutionContext.HAPPINESS)
+                            .build()))
+                    .build());
+
+            PokemonEntity clefable = PokemonEntity.builder()
+                    .nationalId(36)
+                    .name("Clefable")
+                    .build();
+
+            GenerationProfileEntity clefableGEN6 = GenerationProfileEntity.builder()
+                    .generation(Generation.GEN6)
+                    .pokemon(clefable)
+                    .type1(Type.FAIRY)
+                    .type2(null)
+                    .percentMale(25d)
+                    .percentFemale(75d)
+                    .eggGroups(Arrays.asList(EggGroup.FAIRY))
+                    .eggCycles(11)
+                    .evolutionGroup(clefMEvolution)
+                    .build();
+            generationProfileDao.create(clefableGEN6);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .previousPokemon(clefairyGEN6)
+                    .nextPokemon(clefableGEN6)
+                    .evolutionRank(2)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .object(moonstone)
+                            .evolutionContext(EvolutionContext.USE_OBJECT)
+                            .build()))
+                    .build());
+
+//        -----
+
+            EvolutionGroupEntity vulpixMEvolution = EvolutionGroupEntity.builder().build();
+
+            PokemonEntity vulpix = PokemonEntity.builder()
+                    .nationalId(37)
+                    .name("Vulpix")
+                    .build();
+
+            GenerationProfileEntity vulpixGEN6 = GenerationProfileEntity.builder()
+                    .generation(Generation.GEN6)
+                    .pokemon(vulpix)
+                    .type1(Type.FIRE)
+                    .type2(null)
+                    .percentMale(25d)
+                    .percentFemale(75d)
+                    .eggGroups(Arrays.asList(EggGroup.FIELD))
+                    .eggCycles(21)
+                    .evolutionGroup(vulpixMEvolution)
+                    .build();
+            generationProfileDao.create(vulpixGEN6);
+
+            PokemonEntity ninetales = PokemonEntity.builder()
+                    .nationalId(38)
+                    .name("Ninetales")
+                    .build();
+
+            GenerationProfileEntity ninetalesGEN6 = GenerationProfileEntity.builder()
+                    .generation(Generation.GEN6)
+                    .pokemon(ninetales)
+                    .type1(Type.FIRE)
+                    .type2(null)
+                    .percentMale(25d)
+                    .percentFemale(75d)
+                    .eggGroups(Arrays.asList(EggGroup.FIELD))
+                    .eggCycles(21)
+                    .evolutionGroup(vulpixMEvolution)
+                    .build();
+            generationProfileDao.create(ninetalesGEN6);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .previousPokemon(vulpixGEN6)
+                    .nextPokemon(ninetalesGEN6)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .object(firestone)
+                            .evolutionContext(EvolutionContext.USE_OBJECT)
+                            .build()))
+                    .build());
+
+//        -----
+
+            EvolutionGroupEntity jiggMEvolution = EvolutionGroupEntity.builder().build();
+            evolutionGroupDao.create(jiggMEvolution);
+
+            PokemonEntity igglybuff = PokemonEntity.builder()
+                    .nationalId(174)
+                    .name("Igglybuff")
+                    .build();
+
+            GenerationProfileEntity igglyGEN6 = GenerationProfileEntity.builder()
+                    .generation(Generation.GEN6)
+                    .pokemon(igglybuff)
+                    .type1(Type.NORMAL)
+                    .type2(Type.FAIRY)
+                    .percentMale(25d)
+                    .percentFemale(75d)
+                    .eggGroups(Arrays.asList(EggGroup.UNDISCOVERED))
+                    .eggCycles(11)
+                    .evolutionGroup(jiggMEvolution)
+                    .build();
+            generationProfileDao.create(igglyGEN6);
+
+            PokemonEntity jigglypuff = PokemonEntity.builder()
+                    .nationalId(39)
+                    .name("Jigglypuff")
+                    .build();
+
+            GenerationProfileEntity jigglyGEN6 = GenerationProfileEntity.builder()
+                    .generation(Generation.GEN6)
+                    .pokemon(jigglypuff)
+                    .type1(Type.NORMAL)
+                    .type2(Type.FAIRY)
+                    .percentMale(25d)
+                    .percentFemale(75d)
+                    .eggGroups(Arrays.asList(EggGroup.FAIRY))
+                    .eggCycles(11)
+                    .evolutionGroup(jiggMEvolution)
+                    .build();
+            generationProfileDao.create(jigglyGEN6);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .previousPokemon(igglyGEN6)
+                    .nextPokemon(jigglyGEN6)
+                    .evolutionRank(1)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .evolutionContext(EvolutionContext.HAPPINESS)
+                            .build()))
+                    .build());
+
+            PokemonEntity wigglytuff = PokemonEntity.builder()
+                    .nationalId(40)
+                    .name("Wigglytuff")
+                    .build();
+
+            GenerationProfileEntity wigglyGEN6 = GenerationProfileEntity.builder()
+                    .generation(Generation.GEN6)
+                    .pokemon(wigglytuff)
+                    .type1(Type.NORMAL)
+                    .type2(Type.FAIRY)
+                    .percentMale(25d)
+                    .percentFemale(75d)
+                    .eggGroups(Arrays.asList(EggGroup.FAIRY))
+                    .eggCycles(11)
+                    .evolutionGroup(jiggMEvolution)
+                    .build();
+            generationProfileDao.create(wigglyGEN6);
+            evolutionDao.create(EvolutionEntity.builder()
+                    .previousPokemon(jigglyGEN6)
+                    .nextPokemon(wigglyGEN6)
+                    .evolutionRank(2)
+                    .conditions(Arrays.asList(EvolveConditionEntity.builder()
+                            .object(moonstone)
+                            .evolutionContext(EvolutionContext.USE_OBJECT)
+                            .build()))
+                    .build());
 
 //        -----
 

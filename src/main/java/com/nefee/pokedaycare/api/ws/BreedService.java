@@ -6,7 +6,7 @@ import com.nefee.pokedaycare.logging.utils.PerfomanceLog;
 import com.nefee.pokedaycare.logic.exception.BreedingNotPossibleException;
 import com.nefee.pokedaycare.logic.exception.PokeNotFoundException;
 import com.nefee.pokedaycare.logic.manager.BreedManager;
-import com.nefee.pokedaycare.logic.model.BreedCase;
+import com.nefee.pokedaycare.logic.dto.BreedCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,9 +25,11 @@ public class BreedService {
     private Gson gson;
 
     @GET
-    @Path ("/{nationalId}")
+    @Path ("/gen/{gen}/{nationalId}")
     @Produces ((MediaType.APPLICATION_JSON))
     public String requestBreedCase(
+            @PathParam ("gen")
+            Integer gen,
             @PathParam ("nationalId")
             Integer nationalId) {
 
@@ -38,11 +40,9 @@ public class BreedService {
         BreedCase bc;
 
         try {
-            bc = breedManager.buildBreedCase(nationalId, null);
-        } catch (PokeNotFoundException e) {
-            return "Nothing found";
-        } catch (BreedingNotPossibleException e) {
-            return "Breeding not possible";
+            bc = breedManager.buildBreedCase(nationalId, gen);
+        } catch (PokeNotFoundException|BreedingNotPossibleException e) {
+            return e.getMessage();
         }
 
         PerfomanceLog.logPerf(startMillis, LOGGER, "build BreedCase for pokemon id " + nationalId);

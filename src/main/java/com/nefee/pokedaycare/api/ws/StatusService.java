@@ -19,7 +19,6 @@ public class StatusService {
     @Path ("/isAlive")
     @Produces ((MediaType.TEXT_PLAIN))
     public String isAlive() {
-        LOGGER.info(IS_ALIVE);
         return IS_ALIVE;
     }
 

@@ -3,8 +3,8 @@ package com.nefee.pokedaycare.api.ws;
 import com.google.gson.Gson;
 import com.nefee.pokedaycare.config.SpringApplicationContext;
 import com.nefee.pokedaycare.logging.utils.PerfomanceLog;
+import com.nefee.pokedaycare.logic.dto.Pokemon;
 import com.nefee.pokedaycare.logic.manager.PokemonManager;
-import com.nefee.pokedaycare.logic.model.Pokemon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,9 +24,11 @@ public class PokemonService {
     private Gson gson;
 
     @GET
-    @Path ("/{nationalId}")
+    @Path ("/gen/{gen}/{nationalId}")
     @Produces ((MediaType.APPLICATION_JSON))
-    public String getInfos(
+    public String getPokemon(
+            @PathParam ("gen")
+            Integer gen,
             @PathParam ("nationalId")
             Integer nationalId) {
 
@@ -34,7 +36,7 @@ public class PokemonService {
 
         load();
 
-        Optional<Pokemon> optional = pokemonManager.findByNationalIdAndGeneration(nationalId, null);
+        Optional<Pokemon> optional = pokemonManager.findByNationalIdAndGeneration(nationalId, gen);
 
         if (optional.isPresent()) {
             String json = gson.toJson(optional.get());

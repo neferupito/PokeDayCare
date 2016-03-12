@@ -1,6 +1,6 @@
 package com.nefee.pokedaycare.logic.manager.impl;
 
-import com.nefee.pokedaycare.logic.model.BreedCase;
+import com.nefee.pokedaycare.logic.dto.BreedCase;
 
 public class SpecialCaseProvider {
 

@@ -1,7 +1,7 @@
 package com.nefee.pokedaycare.logic.transformer;
 
 import com.nefee.pokedaycare.data.entity.generation.GenerationProfileEntity;
-import com.nefee.pokedaycare.logic.model.Pokemon;
+import com.nefee.pokedaycare.logic.dto.Pokemon;
 
 import java.util.ArrayList;
 import java.util.Collection;
