@@ -13,12 +13,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table (name = "EVOLUTION_GROUPS")
+@Table (name = "evolution_groups")
 public class EvolutionGroupEntity extends PokeDayCareEntity {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column (name = "EVOL_GROUP_ID", unique = true, nullable = false)
+    @Column (name = "evolution_group_id", unique = true, nullable = false)
     private Long id;
 
     @OneToMany (mappedBy = "evolutionGroup")

@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table (name = "GEN_PROFILES")
+@Table (name = "gen_profiles")
 @NamedQueries ({
         @NamedQuery (name = "GenerationProfileEntity.findByGenerationAndNationalId", query =
                 "SELECT p FROM GenerationProfileEntity p " +
@@ -37,46 +37,46 @@ public class GenerationProfileEntity extends PokeDayCareEntity implements Compar
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column (name = "GEN_PROF_ID", unique = true, nullable = false)
+    @Column (name = "gen_profile_id", unique = true, nullable = false)
     private Long id;
 
     @ManyToOne (cascade = CascadeType.PERSIST)
-    @JoinColumn (name = "PKMN_ID", nullable = false)
+    @JoinColumn (name = "pokemon_id", nullable = false)
     private PokemonEntity pokemon;
 
-    @Column (name = "GEN", nullable = false)
+    @Column (name = "gen", nullable = false)
     @Enumerated (EnumType.ORDINAL)
     private Generation generation;
 
-    @Column (name = "TYPE1", nullable = false)
+    @Column (name = "type1", nullable = false)
     @Enumerated (EnumType.STRING)
     private Type type1;
 
-    @Column (name = "TYPE2")
+    @Column (name = "type2")
     @Enumerated (EnumType.STRING)
     private Type type2;
 
-    @Column (name = "PRCT_MALE")
+    @Column (name = "percent_male")
     private Double percentMale;
 
-    @Column (name = "PRCT_FEMALE")
+    @Column (name = "percent_female")
     private Double percentFemale;
 
     @ElementCollection (targetClass = EggGroup.class)
-    @CollectionTable (name = "EGG_GROUPS",
-            joinColumns = @JoinColumn (name = "POKEMON_ID"))
-    @Column (name = "EGG_GROUP_ID")
+    @CollectionTable (name = "egg_groups",
+            joinColumns = @JoinColumn (name = "gen_profile_id"))
+    @Column (name = "egg_group_id")
     private List<EggGroup> eggGroups;
 
-    @Column (name = "EGGCYCLES")
+    @Column (name = "egg_cycles")
     private Integer eggCycles;
 
     @ManyToOne (cascade = CascadeType.PERSIST)
-    @JoinColumn (name = "EVOL_GROUP_ID")
+    @JoinColumn (name = "evolution_group_id")
     private EvolutionGroupEntity evolutionGroup;
 
     @ManyToOne
-    @JoinColumn (name = "OBJ_ID")
+    @JoinColumn (name = "object_id")
     private ObjectEntity requiredObjectForEgg;
 
     @OneToMany (mappedBy = "previousPokemon")

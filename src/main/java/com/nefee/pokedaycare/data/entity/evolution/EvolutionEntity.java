@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table (name = "EVOLUTIONS")
+@Table (name = "evolutions")
 @NamedQueries ({
         @NamedQuery (name = "EvolutionEntity.findEvolutionByRank", query =
                 "SELECT e FROM EvolutionEntity e " +
@@ -24,18 +24,18 @@ public class EvolutionEntity extends PokeDayCareEntity {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column (name = "EVOL_ID", unique = true, nullable = false)
+    @Column (name = "evolution_id", unique = true, nullable = false)
     private Long id;
 
     @ManyToOne
-    @JoinColumn (name = "PREV_GEN_PROF_ID", nullable = false)
+    @JoinColumn (name = "previous_gen_profil_id", nullable = false)
     private GenerationProfileEntity previousPokemon;
 
     @OneToOne
-    @JoinColumn (name = "NEXT_GEN_PROF_ID", nullable = false)
+    @JoinColumn (name = "next_gen_profile_id", nullable = false)
     private GenerationProfileEntity nextPokemon;
 
-    @Column (name = "EVOL_RANK", nullable = false)
+    @Column (name = "evolution_rank", nullable = false)
     private Integer evolutionRank;
 
     @OneToMany (mappedBy = "evolution", cascade = CascadeType.ALL)

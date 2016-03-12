@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table (name = "POKEMONS")
+@Table (name = "pokemons")
 @NamedQueries ({
         @NamedQuery (name = "PokemonEntity.findByNationalId", query =
                 "SELECT p FROM PokemonEntity p " +
@@ -24,10 +24,10 @@ import java.util.List;
 public class PokemonEntity extends PokeDayCareEntity {
 
     @Id
-    @Column (name = "NAT_ID", unique = true, nullable = false)
+    @Column (name = "national_id", unique = true, nullable = false)
     private Integer nationalId;
 
-    @Column (name = "NAME", nullable = false)
+    @Column (name = "name", nullable = false)
     private String name;
 
     @OneToMany (mappedBy = "pokemon")

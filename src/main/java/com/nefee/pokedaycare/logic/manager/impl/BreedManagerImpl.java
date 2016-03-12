@@ -61,7 +61,7 @@ public class BreedManagerImpl implements BreedManager {
         }
 
         if (!checkIfCanBeEgg(baby)) {
-            throw new BreedingNotPossibleException("Pokemon " + baby.getPokemon().getName() + "can't breed");
+            throw new BreedingNotPossibleException("Pokemon " + baby.getPokemon().getName() + " can't breed");
         }
 
         List<PotentialPartners> potentialPartners = new ArrayList<>();
